@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" >
+    <link rel="stylesheet" type="text/css" href="css/admin-style.css" media="screen" />
+    <script type="text/javascript" src="js/jquery-2.1.3.js"></script>
+    <script type="text/javascript" src="js/jquery.validate.js"></script>
+    <script type="text/javascript" src="js/jquery.jeditable.js"></script>
+    <script type="text/javascript" src="js/luci2/luci2.js"></script>
+
+    <script type="text/javascript" src="js/main.js"></script>
+
+    <title>sudowrt settings</title>
+  </head>
+  <body>
+    <div class="container">
+      <br>
+      <header>
+        <span>
+            <a title="Dashboard" class="iconhref" href="./dashboard.html">
+                <img src="images/dashboard.png" class="icon" alt="dashboard" />
+            </a>
+        </span>
+ 
+        <h1>settings</h1>
+
+        <span>
+            <a title="Logout" class="iconhref" href="./logout.html">
+                <img src="images/logout.png" class="icon" alt="Logout" />
+            </a>
+        </span>
+      </header>
+
+      <br>
+      <br>
+
+      <div id="genericError" class="inputError"></div>
+
+      <section id="main">
+
+        <h2>Administration
+          <span class="subheading">
+            <a href="./changePassword.html" class="links">Change admin password</a>
+          </span>
+        </h2>
+        <div class="section">
+          <p>Software Version <span class="setting"> 0.2.0</span></p>
+        </div>
+
+        <h2>ISP Speeds
+          <span class="subheading">Set these to help optimize your router</span>
+        </h2>
+        <div class="section">
+          <p>ISP Download Speed <span class="setting" ><span id="ispDownloadSpeed" class="editable">10</span> Mb/s </span></p>
+          <p>ISP Upload Speed <span class="setting" ><span id="ispUploadSpeed" class="editable">4</span> Mb/s </span></p>
+        </div>
+
+        <h2>Open Wireless</h2>
+        <div class="section">
+          <p>
+            <label for=openwirelessBandwidth>Bandwidth fraction to share</label>
+            <span class="setting"><span class="editable" id="openwirelessBandwidth">20</span> % </span>
+          </p>
+          <p>
+            <label for="openwirelessActivateDataCap">Activate Data Cap</label>
+            <select class="setting" id="openwirelessActivateDataCap">openwirelessActivateDataCap</select>
+          </p>
+
+             <div id="DataCap">
+               <p>
+		            <label for="openwirelessData">Max shared data per month</label>
+            	    <span class="setting"><span class="editable" id="openwirelessData">10</span> GB </span>
+	             </p>
+               <p>
+		              <span id="usage">Usage counter reset </span><span class="subheading"><a id="reset-usage" href="#" class="links">Reset usage counter</a></span>
+               </p>
+             </div>
+
+
+        </div>
+
+      </section>
+      <footer></footer>
+    </div>
+  </body>
+</html>

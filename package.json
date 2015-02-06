@@ -1,0 +1,26 @@
+{
+  "name": "sudowrt-luci2-webclient",
+  "version": "0.0.1",
+  "main": "./server.js",
+  "description": "Client side web admin interface for sudowrt",
+  "homepage": "http://github.com/sudomesh/sudowrt-luci2-webclient",
+  "author": {
+    "name": "Marc Juul",
+    "email": "npm@juul.io"
+  },
+  "keywords": [
+    "sudowrt",
+    "openwrt",
+    "luci2",
+    "ubus",
+    "admin"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/sudomesh/sudowrt-luci2-webclient.git"
+  },
+  "dependencies": {
+    "body-parser": "^1.11.0",
+    "express": "^4.11.2"
+  }
+}
