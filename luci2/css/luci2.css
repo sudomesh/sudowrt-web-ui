@@ -1,0 +1,150 @@
+body {
+	padding-top: 55px;
+}
+
+.fade.in {
+	background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal.fade.wide .modal-dialog {
+	width: 900px;
+}
+
+.progress {
+	position: relative;
+	width: 250px;
+}
+
+.progress-bar {
+	z-index: 1;
+	position: absolute;
+}
+
+.progress small {
+	position: absolute;
+	top: 0;
+	z-index: 2;
+	color: black;
+	text-align: center;
+	width: 100%;
+}
+
+.nav.nav-tabs {
+	margin-bottom: 15px;
+}
+
+.luci2-modal-loader {
+	background: #FFFFFF url(/luci2/icons/loading.gif) no-repeat 10px center;
+	text-align: center;
+}
+
+.luci2-section-header {
+	position: relative;
+}
+
+.luci2-section-header .badge {
+	position: absolute;
+	left: -11px;
+	top: -7px;
+	background-color: #D9534F;
+}
+
+.nav-tabs li a .badge {
+	background-color: #D9534F;
+}
+
+.nav-tabs li.active a .badge {
+	display: none;
+}
+
+.list-group-item .luci2-section-header > .btn-group {
+	position: absolute;
+	top: 2px;
+	right: 2px;
+	z-index: 10;
+	box-shadow: -5px 0 5px 10px #FFFFFF;
+	display: none;
+}
+
+.list-group-item:hover .luci2-section-header > .btn-group {
+	display: inline-block;
+}
+
+.luci2-section-teaser {
+	font-size: 90%;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+	cursor: pointer;
+	margin-bottom: 0 !important;
+}
+
+.panel > .list-group > .list-group-item:first-child {
+	border-top: none;
+	border-top-left-radius: 4px;
+	border-top-right-radius: 4px;
+}
+
+.panel > .panel-body + .list-group > .list-group-item:first-child {
+	border-top: 1px solid #DDDDDD;
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+}
+
+table.table td .btn-group {
+	white-space: nowrap;
+}
+
+table.table td .btn-group > .btn {
+	float: none;
+}
+
+.luci2-form-error .control-label {
+	color: #B94A48;
+}
+
+pre.uci-changes {
+	margin: 3px 0;
+}
+
+pre.uci-changes ins {
+	text-decoration: none;
+	color: #008000;
+}
+
+pre.uci-changes del {
+	text-decoration: none;
+	color: #800000;
+}
+
+.ifacebox {
+	border: 1px solid #DDDDDD;
+	border-radius: 3px;
+	background-color: #FFFFFF;
+	text-align: center;
+	white-space: nowrap;
+}
+
+.ifacebox-head {
+	border-bottom: 1px solid #DDDDDD;
+	padding: 0 3px;
+}
+
+.traffic-chart {
+	position: relative;
+}
+
+.traffic-chart label {
+	position: absolute;
+	left: 0;
+	top: 0;
+	background-color: rgba(255, 255, 255, 0.5);
+	font-size: 80%;
+	font-weight: normal;
+}
+
+.badge input[type=text] {
+	border: none;
+	border-radius: 3px;
+	padding: 1px 3px;
+}

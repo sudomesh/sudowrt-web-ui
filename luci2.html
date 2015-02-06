@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+    <head>
+        <title>LuCI2</title>
+
+        <link rel="stylesheet" href="/luci2/css/bootstrap.css">
+        <link rel="stylesheet" href="/luci2/css/luci2.css">
+
+        <!--[if lt IE 9]>
+            <script src="/luci2/html5.js"></script>
+            <script src="/luci2/respond.min.js"></script>
+        <![endif]-->
+
+        <script type="text/javascript" src="/luci2/jquery-1.9.1.js"></script>
+        <script type="text/javascript" src="/luci2/jquery.peity.js"></script>
+        <script type="text/javascript" src="/luci2/bootstrap.js"></script>
+        <script type="text/javascript" src="/luci2/luci2.js"></script>
+
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+
+        <script type="text/javascript">
+            $(function() {
+                var L = new LuCI2();
+
+                L.ui.login().then(function() {
+                    L.ui.load();
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <div class="navbar navbar-inverse navbar-fixed-top" role="banner">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#" id="hostname">&nbsp;</a>
+                </div>
+                <div class="collapse navbar-collapse" id="mainmenu"></div>
+            </div>
+        </div>
+
+        <div id="viewmenu"></div>
+
+        <div id="maincontent" class="container">
+
+        </div>
+<!--
+        <footer>
+            <a href="http://luci.subsignal.org/">Powered by LuCI Trunk (git-8b6d8db)</a>
+            OpenWrt Barrier Breaker r37529
+        </footer>
+-->
+    </body>
+</html>
