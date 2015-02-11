@@ -46,28 +46,38 @@
           </span>
         </h2>
         <div class="section">
-          <p>Software Version <span class="setting"> 0.2.0</span></p>
+          <p>Software Version <span class="setting"> 0.2.0 (fairy dust)</span></p>
         </div>
 
-        <h2>Open Wireless</h2>
+        <h2>peoplesopen.net</h2>
         <div class="section">
-          <p>Download Speed Limit<span class="setting" ><span id="downloadSpeedLimit" class="editable">10</span> Kb/s </span></p>
-          <p>Upload Speed Limit<span class="setting" ><span id="uploadSpeedLimit" class="editable">4</span> Kb/s </span></p>
+          <p>Shared Download Speed Limit<span class="setting" ><span id="downloadSpeedLimit" class="editable">10</span> Kb/s </span></p>
+          <p>Shared Upload Speed Limit<span class="setting" ><span id="uploadSpeedLimit" class="editable">4</span> Kb/s </span></p>
           <p>
             <label for="openwirelessActivateDataCap">Activate Data Cap</label>
             <select class="setting" id="openwirelessActivateDataCap">openwirelessActivateDataCap</select>
           </p>
+          
+          <div id="DataCap">
+            <p>
+		          <label for="openwirelessData">Max shared data per month</label>
+            	<span class="setting"><span class="editable" id="openwirelessData">10</span> GB </span>
+	          </p>
+          </div>
 
-             <div id="DataCap">
-               <p>
-		            <label for="openwirelessData">Max shared data per month</label>
-            	    <span class="setting"><span class="editable" id="openwirelessData">10</span> GB </span>
-	             </p>
-               <p>
-		              <span id="usage">Usage counter reset </span><span class="subheading"><a id="reset-usage" href="#" class="links">Reset usage counter</a></span>
-               </p>
-             </div>
+        </div>
 
+        <h2>Private WiFi</h2>
+        <div class="section">
+
+          <p>
+		        <label for="privateSSID">Max shared data per month</label>
+            <span class="setting"><span class="editable" id="privateSSID">heartofgold</span></span>
+	        </p>
+          <p>
+		        <span>Private WiFi Password</span><span class="subheading"><a href="#" class="links">Change WiFi password</a></span>
+          </p>
+          
 
         </div>
 
