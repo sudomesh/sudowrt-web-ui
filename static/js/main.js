@@ -5,6 +5,7 @@ var validateInput = function(e) {
 
 
 var luci2;
+var ubus;
 
 var pageInit = function() {
 
@@ -21,11 +22,23 @@ var pageInit = function() {
       onsubmit: validateInput
     });
 
+
+    ubus = new UBus();
+    ubus.login('root', 'foobar', function(err, res) {
+        if(err) {
+            return console.error(err);
+        }
+        console.log("Logged in!");
+        console.log(res);
+    })
+
+/*
     luci2 = new LuCI2('js/luci2');
     luci2.network.load().then(function() {
         var interfaces = luci2.network.getInterfaces();
         console.log(interfaces);
     });
+*/
 
 }
 
