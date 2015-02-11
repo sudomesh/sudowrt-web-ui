@@ -7,7 +7,7 @@ var path = require('path');
 var bodyParser = require('body-parser');
 var jsonrpc = require('node-express-json-rpc2');
 
-var ubusSim = require('./uci.js');
+var uci = require('./uci.js');
 var ubusSim = require('./ubus_simulator.js');
 
 var settings = {

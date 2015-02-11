@@ -1,9 +1,13 @@
 
 var path = require('path');
 
+var async = require('async');
 var extend = require('extend');
 var findit = require('findit');
 var LineReader = require('line-by-line');
+
+// Based on:
+// http://wiki.openwrt.org/doc/techref/ubus#access_to_ubus_over_http
 
 // This is surely a very buggy and non-strict parser
 // It was written only for the ubus simulator
@@ -17,29 +21,49 @@ var LineReader = require('line-by-line');
 
 module.exports = {
 
-    listPackages: function(callback) {
-        var configPath = path.resolve(path.join(__dirname, 'config'));
+    configPath: path.resolve(path.join(__dirname, 'config')),
+
+    _withEachFile: function(eachCallback, callback) {
+        var configPath = this.configPath;
         var finder = findit(configPath);
-        var packages = [];
+        var files = [];
         finder.on('file', function(file, stat) {
-            this.parseFile(file, function(conf) {
+            files.push(file);
+        });
+        finder.on('end', function() {
+            async.eachSeries(files, eachCallback, callback);
+        });        
+    }, 
+
+    listPackages: function(callback) {
+
+        var packages = [];
+        this._withEachFile(function(file, callback) {
+            this.parseFile(file, function(err, conf) {
+                if(err) {
+                    return callback(err);
+                }
                 var keys = Object.keys(conf);
                 if(keys.length < 1) {
-                    return;
+                    return callback();
                 }
                 var pkgName = keys[0];
                 if(packages.indexOf(pkgName) >= 0) {
-                    return;
+                    return callback();
                 }
                 packages.push(pkgName);
-            });
-        });
-        finder.on('end', function() {
+                callback();
+            });           
+ 
+        }.bind(this), function(err) {
+            if(err) {
+                return callback(err);
+            }
             callback(null, {packages: packages});
         });
     },
 
-    parseFile: function(file, callback) {
+    parseFile: function(filePath, callback) {
         var sections = {};
         var pkgName;
         var lr = new LineReader(filePath, {
@@ -48,12 +72,17 @@ module.exports = {
         });
 
         var sectionName;
+        var anonCount = 0;
 
         lr.on('line', function(line) {
+
             if(line.match(/^\s*#/)) { // skip comments
                 return;
             }
+
+            line = line.replace(/^\s+/g, ''); // remove leading whitespace
             var parts = line.split(/\s+/);
+
             if(parts.length < 2) {
                 return;
             }
@@ -70,11 +99,11 @@ module.exports = {
                 pkgName = parts[1];
             } else if(parts[0] == 'config') { // section
                 var stype = parts[1];
-                if(parts.length > 2) [ // named section
+                if(parts.length > 2) { // named section
                     sectionName = parts.slice(2).join(' ');
                 } else { // anonymous section
                     // TODO it is not documented how ubus returns these
-                    sectionName = 'anonymous';
+                    sectionName = 'anonymous'+anonCount++;
                 }
                 sections[sectionName] = {
                     '.type': stype
@@ -104,7 +133,7 @@ module.exports = {
                     sections[sectionName][optionName].push(val);
                 }
             }
-        });
+        }.bind(this));
 
         lr.on('error', function(err) {
             lr.close();
@@ -113,7 +142,7 @@ module.exports = {
 
         lr.on('end', function() {
             if(!pkgName) {
-                pkgName = path.basename(file);
+                pkgName = path.basename(filePath);
             }
             var resp = {};
             resp[pkgName] = sections;
@@ -122,21 +151,27 @@ module.exports = {
     },
 
     parsePackage: function(pkg, callback) {
-        var finder = findit(configPath);
+
         var pkgConf = {};
-        finder.on('file', function(file, stat) {
-            this.parseFile(file, function(conf) {
+        this._withEachFile(function(file, callback) {
+            this.parseFile(file, function(err, conf) {
+                if(err) {
+                    return callback(err);
+                }
                 var keys = Object.keys(conf);
                 if(keys.length < 1) {
-                    return;
+                    return callback();
                 }
                 var pkgName = keys[0];
                 if(pkgName == pkg) {
                     extend(true, pkgConf, conf);
                 }
+                callback();
             });
-        });
-        finder.on('end', function() {
+        }.bind(this), function(err) {
+            if(err) {
+                return callback(err);
+            }
             callback(null, pkgConf);
         });
     },
@@ -184,21 +219,33 @@ module.exports = {
 
     getOptionFromSectionWithName: function(pkg, sectionName, option, callback) {
         // TODO implement
+        callback("Not implemented");
     },
 
     getOptionFromSectionOfType: function(pkg, sectionType, option, callback) {
         // TODO implement
+        callback("Not implemented");
     },
 
     get: function(opts, callback) {
         opts = opts || {};
         if(!opts.package) {
-            return listPackages(callback);
+            return this.listPackages(callback);
         }
-        
-        // TODO implement so it matches spec from:
-        // http://wiki.openwrt.org/doc/techref/ubus#access_to_ubus_over_http
-        return null;
+
+        if(opts.section) { // section name
+            if(opts.option) {
+                return this.getOptionFromSectionWithName(opts.package, opts.section, opts.option, callback);
+            }
+            return this.getSectionWithName(opts.package, opts.section, callback);
+        } else if(opts.type) { // section type
+            if(opts.option) {
+                return this.getOptionFromSectionOfType(opts.package, opts.type, opts.option, callback);
+            }
+            return this.getSectionsOfType(opts.package, opts.type, callback);
+        } else { // neither section name nor section type specified
+            return this.parsePackage(opts.package, callback);
+        }
     }
 
 };
