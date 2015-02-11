@@ -6,6 +6,23 @@ var validateInput = function(e) {
 var luci2;
 var ubus;
 
+
+var populateTemplate = function() {
+
+    ubus.call('uci.get', {
+        package: 'tunneldigger', 
+        section: 'main'
+    }, function(err, resp) {
+        if(err) {
+            return console.error(err);
+        }
+        var conf = resp.data['main'];
+        $('#downloadSpeedLimit').html(parseInt(conf.limit_bw_down));
+        $('#uploadSpeedLimit').html(parseInt(conf.limit_bw_up));
+    });
+
+};
+
 var pageInit = function() {
 
     // init jeditable functions
@@ -29,7 +46,12 @@ var pageInit = function() {
         }
         console.log("Logged in!");
         console.log(res);
-    })
+
+        populateTemplate();
+
+    });
+
+    
 
 /*
     luci2 = new LuCI2('js/luci2');

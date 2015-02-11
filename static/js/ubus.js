@@ -24,6 +24,7 @@ var UBus = function(opts) {
             }
             return;
         }
+        console.log([sessionID, obj, method, args]);
 
         this.rpc.call(
             'call', [sessionID, obj, method, args],
@@ -31,12 +32,11 @@ var UBus = function(opts) {
                 if(callback) {
                     if(res[0] === 0) {
                         callback(null, res[1]);
-
                     // 6 is ubus' way of saying access denied
                     } else if(res[0] === 6) {
                         callback("ubus: permission denied");
                     } else {
-                        callback("ubus: unknown errorc code: " + res[0], res[1]);
+                        callback("ubus: unknown error code: " + res[0], res[1]);
                     }
                 }
             },
@@ -52,13 +52,9 @@ var UBus = function(opts) {
     // ubus.call('myobject.mymethod', [args], [callback])
     this.call = function(methodPath, args, callback) {
 
-        if(arguments.length < 1) {
-            return;
-        }
-
         var methodPathParts = methodPath.split('.');
-        var obj = methodPathParts.pop();
-        var method = methodPathParts.join('.');
+        var obj = methodPathParts[0];
+        var method = methodPathParts.slice(1).join('.');
 
         return this._call(obj, method, args, callback);
     };

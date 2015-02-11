@@ -186,8 +186,7 @@ module.exports = {
             }
 
             var resp = {};
-            resp[pkg] = {};
-            resp[pkg][sectionName] = conf[pkg][sectionName];
+            resp[sectionName] = conf[pkg][sectionName];
 
             callback(null, resp);
         });

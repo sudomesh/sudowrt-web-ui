@@ -1,4 +1,6 @@
 
+var uci = require('./uci.js');
+
 module.exports = {
 
     _accounts: [
@@ -91,39 +93,33 @@ module.exports = {
                 return callback("Failed to destroy session: Session does not exist", [1, {}]); // TODO what is the expected failure data and error code?
             }
             // TODO what is the expected returned data?
-            callback(null, [0, {}]);
+            callback(null, [0, {data: {}}]);
         }
     },
 
     'network.device': {
         status: function(opts, callback) {
             // TODO implement
+            callback("Not implemented", [1, {}]);
         }
     },
 
     uci: {
         'get': function(opts, callback) {
-            opts = opts || {};
-            if(!opts.package) {
-                
-            }
-            // TODO implement a simple UCI file parser
-
+            uci.get(opts, function(err, data) {
+                callback(null, [0, {data: data}]);
+            });
         },
         'set': function(opts, callback) {
             // TODO implement
-        },
-        'add': function(opts, callback) {
-            // TODO implement
-        },
-        'delete': function(opts, callback) {
-            // TODO implement
+            callback("Not implemented", [1, {}]);
         }
     },
 
     file: {
         'exec': function(opts, callback) {
             // TODO implement
+            callback("Not implemented", [1, {}]);
         }
     }
 };

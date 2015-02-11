@@ -7,7 +7,6 @@ var path = require('path');
 var bodyParser = require('body-parser');
 var jsonrpc = require('node-express-json-rpc2');
 
-var uci = require('./uci.js');
 var ubusSim = require('./ubus_simulator.js');
 
 var settings = {
@@ -21,6 +20,8 @@ app.use(express.static(path.join(__dirname, 'static')));
 console.log("Listening on http://localhost:" + settings.port + "/")
 
 app.use(jsonrpc());
+
+var lol = 0;
 
 app.post('/ubus', function(req, res, next) {
     res.rpc('call', function(params, respond){
@@ -44,12 +45,15 @@ app.post('/ubus', function(req, res, next) {
         }
 
         ubusSim[obj][method].apply(ubusSim, [opts, function(err, res) {
+            res = {result: res};
+
             if(err) {
                 console.error("ERROR: " + util.inspect(res));
             } else {
                 console.log("RESPOND: " + util.inspect(res));
             }
-            respond({result: res});
+
+            respond(res);
         }]);
 
         // if everything is OK return result object:
