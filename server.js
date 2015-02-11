@@ -5,7 +5,7 @@ var express = require('express');
 var util = require('util');
 var path = require('path');
 var bodyParser = require('body-parser');
-var jsonrpc = require('node-express-json-rpc2');
+var jsonrpc = require('node-express-json-rpc2-async');
 
 var ubusSim = require('./ubus_simulator.js');
 
