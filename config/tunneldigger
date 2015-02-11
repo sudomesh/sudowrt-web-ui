@@ -1,0 +1,7 @@
+config broker 'main'
+       list address 'exit1.sudomesh.org:8942'
+       option uuid '1234567'
+       option interface 'l2tp0'
+       option limit_bw_down '2048kbit'
+       option limit_bw_up '512kbit'
+       option hook_script '/opt/mesh/tunnel_hook'

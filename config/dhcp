@@ -1,0 +1,36 @@
+config dnsmasq
+       option domainneeded 1
+       option boguspriv 1
+       option filterwin2k 0 # enable for dial on demand
+       option localise_queries 1
+       option rebind_protection 1 # disable if upstream must serve RFC1918 addresses
+       option rebind_localhost 1 # enable for RBL checking and similar services
+       option local '/lan/'
+       option domain 'lan'
+       option expandhosts 1
+       option nonegcache 0
+       option authoritative 1
+       option readethers 1
+       option leasefile '/tmp/dhcp.leases'
+       option resolvfile '/tmp/resolv.conf.auto'
+       list interface 'open0'
+       list interface 'priv0'
+
+
+config 'dhcp' 'meshpool'
+       option interface 'open'
+       option networkid 'open0'
+       option start <%= open_dhcp_range_start %>
+       option limit 203
+       option leasetime 5m
+       list dhcp_option '1,<%= open_subnet_ipv4_mask %>' # subnet mask
+       list dhcp_option '3,<%= open_addr_ipv4 %>' # gateway
+       list dhcp_option '6,<%= open_addr_ipv4 %>' # DNS
+
+config 'dhcp' 'privatepool'
+       option interface 'priv'
+       option start 10
+       option limit 240
+       option leasetime 30m
+       list dhcp_option '1,255.255.255.0' # subnet mask
+       list dhcp_option '3,172.30.0.1' # gateway

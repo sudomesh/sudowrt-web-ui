@@ -1,0 +1,15 @@
+config interface
+  option 'ifname' 'l2tp0'
+config interface
+  option 'ifname' 'adhoc0'
+
+config filter
+  option 'type' 'redistribute'
+  option 'ip' '172.30.0.1/26'
+  option 'le' '24'
+  option 'action' 'metric 128'
+
+config filter
+  option 'type' 'redistribute'
+  option 'local' 'true'
+  option 'action' 'deny'

@@ -3,7 +3,6 @@ var validateInput = function(e) {
     console.log(e);
 }
 
-
 var luci2;
 var ubus;
 
