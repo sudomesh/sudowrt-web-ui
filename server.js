@@ -21,8 +21,6 @@ console.log("Listening on http://localhost:" + settings.port + "/")
 
 app.use(jsonrpc());
 
-var lol = 0;
-
 app.post('/ubus', function(req, res, next) {
     res.rpc('call', function(params, respond){
 
@@ -48,7 +46,7 @@ app.post('/ubus', function(req, res, next) {
             res = {result: res};
 
             if(err) {
-                console.error("ERROR: " + util.inspect(res));
+                console.error("ERROR: " + err + " | " +  util.inspect(res));
             } else {
                 console.log("RESPOND: " + util.inspect(res));
             }

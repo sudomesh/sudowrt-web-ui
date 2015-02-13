@@ -17,8 +17,23 @@ var populateTemplate = function() {
             return console.error(err);
         }
         var conf = resp.data['main'];
-        $('#downloadSpeedLimit').html(parseInt(conf.limit_bw_down));
-        $('#uploadSpeedLimit').html(parseInt(conf.limit_bw_up));
+
+        ubus.call('uci.set', {
+            package: 'tunneldigger', 
+            section: 'main',
+            option: 'limit_bw_down',
+            value: '4096kbit'
+        }, function(err, resp) {
+            if(err) {
+                return console.error(err);
+            }
+
+            $('#downloadSpeedLimit').html(parseInt(conf.limit_bw_down));
+            $('#uploadSpeedLimit').html(parseInt(conf.limit_bw_up));
+
+            console.log("Success setting lollerskater: " + resp);
+        });
+
     });
 
 };

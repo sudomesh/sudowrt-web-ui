@@ -107,13 +107,23 @@ module.exports = {
     uci: {
         'get': function(opts, callback) {
             uci.get(opts, function(err, data) {
-                callback(null, [0, {data: data}]);
+                if(err) {
+                    return callback(err, [1, {error: err}])
+                }
+
+                callback(err, [0, {data: data}]);
             });
         },
         'set': function(opts, callback) {
-            // TODO implement
-            callback("Not implemented", [1, {}]);
-        }
+
+            uci.set(opts, function(err, data) {
+                if(err) {
+                    return callback(err, [1, {error: err}])
+                }
+
+                callback(err, [0, {data: {}}]);
+            });
+       }
     },
 
     file: {

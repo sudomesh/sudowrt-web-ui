@@ -1,5 +1,7 @@
 
 var path = require('path');
+var fs = require('fs');
+var util = require('util');
 
 var async = require('async');
 var extend = require('extend');
@@ -17,7 +19,7 @@ var LineReader = require('line-by-line');
 
 // Known limitations
 //
-// * Only understands one package per file (not sure if spec allows multiple)
+// * Only understands one uci package per config file (not sure if spec allows multiple)
 
 module.exports = {
 
@@ -99,15 +101,24 @@ module.exports = {
                 pkgName = parts[1];
             } else if(parts[0] == 'config') { // section
                 var stype = parts[1];
+                var anonymous = false;
                 if(parts.length > 2) { // named section
                     sectionName = parts.slice(2).join(' ');
                 } else { // anonymous section
                     // TODO it is not documented how ubus returns these
                     sectionName = 'anonymous'+anonCount++;
+                    anonymous = true;
                 }
+
+
+
                 sections[sectionName] = {
-                    '.type': stype
+                    '.type': stype,
+                    '.name': sectionName,
+                    '.filePath': filePath,
+                    '.anonymous': anonymous
                 };
+
             } else if(parts[0] == 'option') { // option
                 if(!sectionName) {
                     return;
@@ -244,6 +255,100 @@ module.exports = {
             return this.getSectionsOfType(opts.package, opts.type, callback);
         } else { // neither section name nor section type specified
             return this.parsePackage(opts.package, callback);
+        }
+    },
+
+    writeSection: function(section, callback) {
+
+        if(!section['.type'] || !section['.filePath'] || !section['.name']) {
+            return callback("Config file section was missing .type, .name or .filePath: " + util.inspect(section));
+        }
+
+        // Write section header, e.g: "config interface 'lan'"
+        var txt = "config " + section['.type'];
+        if(!section['.anonymous']) {
+            txt += " '" + section['.name'] + "'";
+        }
+        txt += "\n";
+            
+        // Write "option" and "list" lines
+        var optName, prop, i;
+        for(optName in section) {
+            if(optName[0] == '.') { // don't copy properties starting with a dot
+                continue;
+            }
+            optVal = section[optName];
+            if(optVal instanceof Array) { // this is a list
+                for(i=0; i < optVal.length; i++) {
+                    txt += "\t" + "list " + optName + " '" + optVal[i] + "'\n"
+                }
+            } else { // this is a normal option
+                txt += "\t" + "option " + optName + " '" + optVal + "'\n"
+            }
+        }
+        txt += "\n";
+
+        fs.appendFile(section['.filePath'], txt, function(err) {
+            if(err) {
+                return callback("Could not write to config file: " + section['.filePath'] + " | " + err);
+            }
+            callback();
+        });
+    },
+
+    writePackage: function(conf, callback) {
+
+        var keys = Object.keys(conf);
+        var pkg = keys[0];
+
+        var sections = [];
+        var files = []; // files associated with sections
+        var sname, section;
+        for(sname in conf[pkg]) {
+            section = conf[pkg][sname];
+            sections.push(section);
+            if(files.indexOf(section['.filePath']) < 0) {
+                files.push(section['.filePath']);
+            }
+        }
+        
+        // delete old config files
+        async.eachSeries(files, fs.unlink, function(err) {
+            if(err) {
+                return callback("Error deleting old config files: " + err);
+            }
+            // write (modified) config sections to files
+            async.eachSeries(sections, this.writeSection, callback);
+        }.bind(this));
+    },
+
+    set: function(opts, callback) {
+        opts = opts || {};
+
+        if(!opts.package || !opts.section || !opts.value) {
+            return callback("Missing package, section or value");
+        }
+
+        if(opts.option) { // this means we're changing an existing option
+            this.parsePackage(opts.package, function(err, conf) {
+                if(err) {
+                    return callback(err);
+                }
+
+                if(!conf[opts.package] || !conf[opts.package][opts.section]) {
+                    return callback("Package or section does not exist");
+                }
+
+                conf[opts.package][opts.section][opts.option] = opts.value;
+
+                this.writePackage(conf, function(err) {
+                    callback(err);
+                });
+            }.bind(this));
+
+        } else { // this means we're adding a new section
+            // TODO implement
+            return callback("Not implemented");
         }
     }
 

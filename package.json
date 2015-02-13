@@ -25,6 +25,7 @@
     "express": "^4.11.2",
     "extend": "^2.0.0",
     "findit": "^2.0.0",
+    "glob": "^4.3.5",
     "line-by-line": "^0.1.3",
     "node-express-json-rpc2": "git://github.com/sudomesh/node-express-json-rpc2"
   }

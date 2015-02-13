@@ -29,6 +29,7 @@ var UBus = function(opts) {
         this.rpc.call(
             'call', [sessionID, obj, method, args],
             function(res) {
+
                 if(callback) {
                     if(res[0] === 0) {
                         callback(null, res[1]);
