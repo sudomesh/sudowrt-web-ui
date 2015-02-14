@@ -18,7 +18,7 @@ header, .network, #check-for-updates div {
 }
 
 footer {
-  margin-bottom: 90px;
+  margin-bottom: 30px;
 }
 
 .ips, #last-login {
@@ -76,19 +76,12 @@ body {
   font-family: 'Oswald', 'Open Sans', 'Helvetic Neue', Helvetica, Arial, sans-serif;
   font-size: 14px;
   color: white;
-  background-image: url("../images/city-tile.png"), url("../images/stars.png"), -webkit-gradient(linear, left bottom, left top, from(#0084af), to(#0c152a));
-  background-image: url("../images/city-tile.png"), url("../images/stars.png"), -moz-gradient(linear, left bottom, left top, from(#0084af), to(#0c152a));
-  background-image: url("../images/city-tile.png"), url("../images/stars.png"), -webkit-linear-gradient(bottom, #0084af, #0c152a);
-  background-image: url("../images/city-tile.png"), url("../images/stars.png"), -moz-linear-gradient(bottom, #0084af, #0c152a);
-  background-image: url("../images/city-tile.png"), url("../images/stars.png"), linear-gradient(bottom, #0084af, #0c152a);
-  background-position: center bottom, center top;
-  background-repeat: repeat-x;
-  -webkit-background-size: 320px auto, 320px auto, auto;
-  background-size: 320px auto, 320px auto, auto;
+  background-image: url("../images/Closeup_aerial_view_of_Downtown_Oakland_and_Lakeside_Park.jpg");
+  background-size:cover;
 }
 
 body p {
-  font-size: 17px;
+  font-size: 14px;
 }
 
 body, h1, h2, h3, h4, h5, h6 {
@@ -140,7 +133,7 @@ small {
 
 .subheading {
   float: right;
-  font-size: 17px;
+  font-size: 14px;
 }
 
 .editable {
@@ -198,6 +191,7 @@ select {
 }
 
 .container {
+  flex-wrap: wrap;
   position: relative;
   margin: 0 auto;
   padding: 0px 17px;
@@ -214,13 +208,13 @@ select {
   -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
   justify-content: space-between;
+  background-color: rgba(0, 0, 0, 0.8);
 }
 
 #main {
   -webkit-box-flex: 1;
   -webkit-flex-grow: 1;
   -ms-flex-positive: 1;
-  min-height: 330px;
   flex-grow: 1;
 }
 
