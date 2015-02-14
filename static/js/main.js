@@ -17,6 +17,7 @@ var populateTemplate = function() {
             return console.error(err);
         }
         var conf = resp.data['main'];
+        $('#interfaceName').html(conf.interface);
         $('#downloadSpeedLimit').html(parseInt(conf.limit_bw_down));
         $('#uploadSpeedLimit').html(parseInt(conf.limit_bw_up));
     });
