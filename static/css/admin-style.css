@@ -1,4 +1,4 @@
-@import url(oswald-font.css);
+@import url(peoplesopen-fonts.css);
 header, .network, #check-for-updates div {
   display: -webkit-box;
   display: -webkit-flex;
@@ -19,6 +19,8 @@ header, .network, #check-for-updates div {
 
 footer {
   margin: 30px 0;
+  font-size:smaller;
+  text-align:center;
 }
 
 .ips, #last-login {
@@ -73,18 +75,19 @@ html, body {
 }
 
 body {
-  font-family: 'Oswald', 'Open Sans', 'Helvetic Neue', Helvetica, Arial, sans-serif;
-  font-size: 14px;
+  font-family: 'dosis', 'Open Sans', 'Helvetic Neue', Helvetica, Arial, sans-serif;
+  font-size: 16px;
   color: white;
   background-image: url("../images/Closeup_aerial_view_of_Downtown_Oakland_and_Lakeside_Park.jpg");
   background-size:cover;
 }
 
 body p {
-  font-size: 14px;
+  font-size: 16px;
 }
 
-body, h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'anaheim';
   font-weight: 300;
 }
 
@@ -93,7 +96,7 @@ h1 {
 }
 
 h1, h2 {
-  font-size: 20px;
+  font-size: 22px;
 }
 
 img {
@@ -133,7 +136,6 @@ small {
 
 .subheading {
   float: right;
-  font-size: 14px;
 }
 
 .editable {
@@ -141,9 +143,8 @@ small {
   background: rgb(0, 173, 238);
   border: 1px solid rgb(0, 173, 238);
   color: white;
-  -webkit-appearance: none;
   padding: 0em .3em 0em .3em;
-  font-size: 13px;
+  font-size: 16px;
   border-radius: 5px;
   font: -webkit-small-control;
   line-height: normal;
@@ -155,7 +156,6 @@ select {
   background: rgb(0, 173, 238);
   border: 1px solid rgb(0, 173, 238);
   color: white;
-  -webkit-appearance: none;
   padding: 0em .3em 0em .3em;
   font-size: 13px;
 }
