@@ -33,7 +33,6 @@ var populateTemplate = function() {
 
             console.log("Success setting lollerskater: " + resp);
         });
-
     });
 
 };

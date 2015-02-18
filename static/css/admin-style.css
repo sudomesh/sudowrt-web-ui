@@ -1,4 +1,4 @@
-@import url(oswald-font.css);
+@import url(peoplesopen-fonts.css);
 header, .network, #check-for-updates div {
   display: -webkit-box;
   display: -webkit-flex;
@@ -18,7 +18,9 @@ header, .network, #check-for-updates div {
 }
 
 footer {
-  margin-bottom: 90px;
+  margin: 30px 0;
+  font-size:smaller;
+  text-align:center;
 }
 
 .ips, #last-login {
@@ -73,25 +75,19 @@ html, body {
 }
 
 body {
-  font-family: 'Oswald', 'Open Sans', 'Helvetic Neue', Helvetica, Arial, sans-serif;
-  font-size: 14px;
+  font-family: 'dosis', 'Open Sans', 'Helvetic Neue', Helvetica, Arial, sans-serif;
+  font-size: 16px;
   color: white;
-  background-image: url("../images/city-tile.png"), url("../images/stars.png"), -webkit-gradient(linear, left bottom, left top, from(#0084af), to(#0c152a));
-  background-image: url("../images/city-tile.png"), url("../images/stars.png"), -moz-gradient(linear, left bottom, left top, from(#0084af), to(#0c152a));
-  background-image: url("../images/city-tile.png"), url("../images/stars.png"), -webkit-linear-gradient(bottom, #0084af, #0c152a);
-  background-image: url("../images/city-tile.png"), url("../images/stars.png"), -moz-linear-gradient(bottom, #0084af, #0c152a);
-  background-image: url("../images/city-tile.png"), url("../images/stars.png"), linear-gradient(bottom, #0084af, #0c152a);
-  background-position: center bottom, center top;
-  background-repeat: repeat-x;
-  -webkit-background-size: 320px auto, 320px auto, auto;
-  background-size: 320px auto, 320px auto, auto;
+  background-image: url("../images/Closeup_aerial_view_of_Downtown_Oakland_and_Lakeside_Park.jpg");
+  background-size:cover;
 }
 
 body p {
-  font-size: 17px;
+  font-size: 16px;
 }
 
-body, h1, h2, h3, h4, h5, h6 {
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'anaheim';
   font-weight: 300;
 }
 
@@ -100,7 +96,7 @@ h1 {
 }
 
 h1, h2 {
-  font-size: 20px;
+  font-size: 18px;
 }
 
 img {
@@ -140,7 +136,6 @@ small {
 
 .subheading {
   float: right;
-  font-size: 17px;
 }
 
 .editable {
@@ -148,9 +143,8 @@ small {
   background: rgb(0, 173, 238);
   border: 1px solid rgb(0, 173, 238);
   color: white;
-  -webkit-appearance: none;
   padding: 0em .3em 0em .3em;
-  font-size: 13px;
+  font-size: 16px;
   border-radius: 5px;
   font: -webkit-small-control;
   line-height: normal;
@@ -162,7 +156,6 @@ select {
   background: rgb(0, 173, 238);
   border: 1px solid rgb(0, 173, 238);
   color: white;
-  -webkit-appearance: none;
   padding: 0em .3em 0em .3em;
   font-size: 13px;
 }
@@ -198,11 +191,12 @@ select {
 }
 
 .container {
+  flex-wrap: wrap;
   position: relative;
   margin: 0 auto;
   padding: 0px 17px;
   max-width: 480px;
-  height: 100%;
+  min-height: 100%;
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -214,13 +208,13 @@ select {
   -webkit-justify-content: space-between;
   -ms-flex-pack: justify;
   justify-content: space-between;
+  background-color: rgba(0, 0, 0, 0.8);
 }
 
 #main {
   -webkit-box-flex: 1;
   -webkit-flex-grow: 1;
   -ms-flex-positive: 1;
-  min-height: 330px;
   flex-grow: 1;
 }
 
