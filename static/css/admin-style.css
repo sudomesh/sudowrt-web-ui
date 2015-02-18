@@ -75,7 +75,7 @@ html, body {
 }
 
 body {
-  font-family: 'dosis', 'Open Sans', 'Helvetic Neue', Helvetica, Arial, sans-serif;
+  font-family: 'anaheim', 'Open Sans', 'Helvetic Neue', Helvetica, Arial, sans-serif;
   font-size: 16px;
   color: white;
   background-image: url("../images/Closeup_aerial_view_of_Downtown_Oakland_and_Lakeside_Park.jpg");
@@ -87,8 +87,8 @@ body p {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'anaheim';
-  font-weight: 300;
+  font-family: 'dosis';
+  font-weight: bold;
 }
 
 h1 {
