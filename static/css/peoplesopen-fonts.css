@@ -15,7 +15,7 @@
 @font-face {
     font-family: 'dosis';
     src: local('Dosis');
-    src: url('../fonts/dosis-regular-webfont.eot');
+    src: url('../fonts/dosis-regular-webfont.eot'),
          url('../fonts/dosis-regular-webfont.eot?#iefix') format('embedded-opentype'),
          url('../fonts/dosis-regular-webfont.woff') format('woff'),
          url('../fonts/dosis-regular-webfont.ttf') format('truetype'),
