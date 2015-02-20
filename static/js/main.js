@@ -45,7 +45,7 @@ var pageInit = function() {
     }, {
       type: 'text',
       width: '30',
-      height: '10',
+      height: '14',
       tooltip: "Click to edit",
       select: true,
       submit: 'ok',
