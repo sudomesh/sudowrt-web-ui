@@ -6,6 +6,7 @@ This is a work in progress. Do not expect anything to work. The documentation be
 You can test this web app without a sudowrt install by running:
 
 ```
+npm install
 node server.js
 ```
 
