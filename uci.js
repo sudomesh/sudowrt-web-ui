@@ -23,7 +23,7 @@ var LineReader = require('line-by-line');
 
 module.exports = {
 
-    configPath: path.resolve(path.join(__dirname, 'config')),
+    configPath: path.resolve(path.join(__dirname, 'uci_config')),
 
     _withEachFile: function(eachCallback, callback) {
         var configPath = this.configPath;

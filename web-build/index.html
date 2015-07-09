@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" >
+    <link rel="stylesheet" type="text/css" href="css/bundle.css" media="screen" />
+    <script type="text/javascript" src="js/bundle.js"></script>
+
+    <title>sudowrt settings</title>
+  </head>
+  <body>
+    <div class="container">
+      <br>
+      <header>
+        <span>
+            <a title="Dashboard" class="iconhref" href="./dashboard.html">
+                Dashboard<br/>
+                <img src="images/dashboard.png" class="icon" alt="dashboard" />
+            </a>
+        </span>
+ 
+        <h1>sudowrt settings</h1>
+
+        <span>
+            <a title="Logout" class="iconhref" href="./logout.html">
+                Logout<br/>
+                <img src="images/logout.png" class="icon" alt="Logout" />
+            </a>
+        </span>
+      </header>
+      <br>
+      <br>
+
+      <div id="genericError" class="inputError"></div>
+
+      <section id="main">
+
+        <h2>Administration
+          <span class="subheading">
+            <a href="./changePassword.html" class="links">Change admin password</a>
+          </span>
+        </h2>
+        <div class="section">
+          <p>Software Version <span class="setting"> 0.2.0 (fledgling)</span></p>
+        </div>
+
+        <h2>peoplesopen.net</h2>
+        <div class="section">
+          <p>Shared Download Speed Limit<span class="setting" ><span id="downloadSpeedLimit" class="editable">10</span> Kb/s </span></p>
+          <p>Shared Upload Speed Limit<span class="setting" ><span id="uploadSpeedLimit" class="editable">4</span> Kb/s </span></p>
+          <p>
+            <label for="openwirelessActivateDataCap">Activate Data Cap</label>
+            <select class="setting" id="openwirelessActivateDataCap">openwirelessActivateDataCap</select>
+          </p>
+
+          <div id="DataCap">
+            <p>
+            <label for="openwirelessData">Max shared data per month</label>
+            <span class="setting"><span class="editable" id="openwirelessData">10</span> GB </span>
+            </p>
+          </div>
+          <p>Network Interface <span class="setting"><span id="interfaceName"></span></span></p>
+
+        </div>
+
+        <h2>Private WiFi</h2>
+        <div class="section">
+
+          <p>
+		        <label for="privateSSID">Private WiFi name (ssid)</label>
+            <span class="setting"><span class="editable" id="privateSSID">heartofgold</span></span>
+	        </p>
+          <p>
+		        <span>Private WiFi Password</span><span class="subheading"><a href="#" class="links">Change WiFi password</a></span>
+          </p>
+          
+
+        </div>
+
+      </section>
+      <footer>
+        <p><!--[if lte IE 8]><span style="filter: FlipH; -ms-filter: "FlipH"; display: inline-block;"><![endif]--><span style="-moz-transform: scaleX(-1); -o-transform: scaleX(-1); -webkit-transform: scaleX(-1); transform: scaleX(-1); display: inline-block;">&copy;</span><!--[if lte IE 8]></span><![endif]--> CopyLeft <a href="https://peoplesopen.net"><abbr>peoplesopen.net</abbr></a>, <br/>All Wrongs Reversed, <script type="text/javascript">var d = new Date(); var year = d.getFullYear(); document.write(year);</script>.</p>
+      </footer>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,21 @@
+{
+  "name": "sudomesh_bower_components",
+  "version": "0.0.0",
+  "homepage": "https://github.com/sudomesh/sudowrt-luci2-webclient",
+  "authors": [
+    "Sudomesh <info@sudomesh.org>"
+  ],
+  "description": "bower components for sudomesh home node admin ui",
+  "license": "GPLv3",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "devDependencies": {
+    "jquery-jsonrpc": "~0.1.1",
+    "jquery_jeditable": "git@github.com:tuupola/jquery_jeditable.git#~1.7.3"
+  }
+}
