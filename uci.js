@@ -2,6 +2,7 @@
 var path = require('path');
 var fs = require('fs');
 var util = require('util');
+var _ = require('lodash');
 
 var async = require('async');
 var extend = require('extend');
@@ -37,9 +38,9 @@ module.exports = {
         });        
     }, 
 
-    listPackages: function(callback) {
+    listConfigs: function(callback) {
 
-        var packages = [];
+        var configs = [];
         this._withEachFile(function(file, callback) {
             this.parseFile(file, function(err, conf) {
                 if(err) {
@@ -50,10 +51,10 @@ module.exports = {
                     return callback();
                 }
                 var pkgName = keys[0];
-                if(packages.indexOf(pkgName) >= 0) {
+                if(configs.indexOf(pkgName) >= 0) {
                     return callback();
                 }
-                packages.push(pkgName);
+                configs.push(pkgName);
                 callback();
             });           
  
@@ -61,7 +62,7 @@ module.exports = {
             if(err) {
                 return callback(err);
             }
-            callback(null, {packages: packages});
+            callback(null, configs);
         });
     },
 
@@ -161,7 +162,7 @@ module.exports = {
         });
     },
 
-    parsePackage: function(pkg, callback) {
+    parseConfig: function(pkg, callback) {
 
         var pkgConf = {};
         this._withEachFile(function(file, callback) {
@@ -180,6 +181,8 @@ module.exports = {
                 callback();
             });
         }.bind(this), function(err) {
+            console.log('witheachfile pkgConf: ');
+            console.log(pkgConf);
             if(err) {
                 return callback(err);
             }
@@ -188,7 +191,7 @@ module.exports = {
     },
 
     getSectionWithName: function(pkg, sectionName, callback) {
-        this.parsePackage(pkg, function(err, conf) {
+        this.parseConfig(pkg, function(err, conf) {
             if(err) {
                 return callback(err);
             }
@@ -204,12 +207,12 @@ module.exports = {
     },
 
     getSectionsOfType: function(pkg, sectionType, callback) {
-        this.parsePackage(pkg, function(err, conf) {
+        this.parseConfig(pkg, function(err, conf) {
             if(err) {
                 return callback(err);
             }
             if(!conf || !conf[pkg]) {
-                return callback("No such package: " + pkg);
+                return callback("No such config: " + pkg);
             }
 
             var resp = {};
@@ -239,22 +242,35 @@ module.exports = {
 
     get: function(opts, callback) {
         opts = opts || {};
-        if(!opts.package) {
-            return this.listPackages(callback);
+        if(!opts.config) {
+            return this.listConfigs(callback);
         }
 
         if(opts.section) { // section name
             if(opts.option) {
-                return this.getOptionFromSectionWithName(opts.package, opts.section, opts.option, callback);
+                return this.getOptionFromSectionWithName(opts.config, opts.section, opts.option, callback);
             }
-            return this.getSectionWithName(opts.package, opts.section, callback);
+            return this.getSectionWithName(opts.config, opts.section, callback);
         } else if(opts.type) { // section type
             if(opts.option) {
-                return this.getOptionFromSectionOfType(opts.package, opts.type, opts.option, callback);
+                return this.getOptionFromSectionOfType(opts.config, opts.type, opts.option, callback);
             }
-            return this.getSectionsOfType(opts.package, opts.type, callback);
+            return this.getSectionsOfType(opts.config, opts.type, callback);
         } else { // neither section name nor section type specified
-            return this.parsePackage(opts.package, callback);
+            return this.parseConfig(opts.config, function(err, result) {
+              if (typeof result === 'object') {
+                // Arbitrarily choosing first to match ubus uhttpd behavior
+                // this logic may make sense to move into parseConfig
+                var first = _.find(result, function(r) {
+                  return typeof r === 'object';
+                });
+                callback(err, first);
+              } else {
+                if (typeof callback === 'function') {
+                  callback(err, result);
+                }
+              }
+            });
         }
     },
 
@@ -296,7 +312,7 @@ module.exports = {
         });
     },
 
-    writePackage: function(conf, callback) {
+    writeConfig: function(conf, callback) {
 
         var keys = Object.keys(conf);
         var pkg = keys[0];
@@ -325,23 +341,23 @@ module.exports = {
     set: function(opts, callback) {
         opts = opts || {};
 
-        if(!opts.package || !opts.section || !opts.value) {
-            return callback("Missing package, section or value");
+        if(!opts.config || !opts.section || !opts.value) {
+            return callback("Missing config, section or value");
         }
 
         if(opts.option) { // this means we're changing an existing option
-            this.parsePackage(opts.package, function(err, conf) {
+            this.parseConfig(opts.config, function(err, conf) {
                 if(err) {
                     return callback(err);
                 }
 
-                if(!conf[opts.package] || !conf[opts.package][opts.section]) {
-                    return callback("Package or section does not exist");
+                if(!conf[opts.config] || !conf[opts.config][opts.section]) {
+                    return callback("Config or section does not exist");
                 }
 
-                conf[opts.package][opts.section][opts.option] = opts.value;
+                conf[opts.config][opts.section][opts.option] = opts.value;
 
-                this.writePackage(conf, function(err) {
+                this.writeConfig(conf, function(err) {
                     callback(err);
                 });
             }.bind(this));

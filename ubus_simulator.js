@@ -62,7 +62,7 @@ module.exports = {
     },
 
     _delSession: function(sessionID) {
-        return this.findSession(sessionID, true);
+        return this._findSession(sessionID, true);
     },
 
     session: {
@@ -111,7 +111,7 @@ module.exports = {
                     return callback(err, [1, {error: err}])
                 }
 
-                callback(err, [0, {data: data}]);
+                callback(err, [0, {values: data}]);
             });
         },
         'set': function(opts, callback) {
@@ -121,9 +121,18 @@ module.exports = {
                     return callback(err, [1, {error: err}])
                 }
 
-                callback(err, [0, {data: {}}]);
+                callback(err, [0, {value: {}}]);
             });
-       }
+       },
+       'configs': function(opts, callback) {
+            uci.get(opts, function(err, data) {
+                if(err) {
+                    return callback(err, [1, {error: err}])
+                }
+
+                callback(err, [0, {configs: data}]);
+            });
+       },
     },
 
     file: {
