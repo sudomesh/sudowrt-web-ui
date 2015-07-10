@@ -1,5 +1,79 @@
 @import "peoplesopen-fonts";
 
+@bootstrap_path: "../bower_components/bootstrap/";
+//** Load fonts from this directory.
+@icon-font-path:          '../fonts/';
+//** File name for all font files.
+@icon-font-name:          "glyphicons-halflings-regular";
+//** Element ID within SVG icon file.
+@icon-font-svg-id:        "glyphicons_halflingsregular";
+
+@import '@{bootstrap_path}less/glyphicons.less';
+
+/* Reset stuff */
+* {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  margin: 0;
+}
+
+html, body {
+  position: relative;
+  height: 100%;
+  overflow: auto;
+}
+
+
+/* Global Styles */
+a {
+  text-decoration: underline;
+  color: white;
+}
+
+a.iconhref {
+  text-decoration: none;
+}
+
+body {
+  font-family: 'anaheim', 'Open Sans', 'Helvetic Neue', Helvetica, Arial, sans-serif;
+  color: white;
+  background-image: url("../images/Closeup_aerial_view_of_Downtown_Oakland_and_Lakeside_Park.jpg");
+  background-size:cover;
+}
+
+body p {
+  font-size: 100%;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'dosis';
+  font-weight: bold;
+}
+
+h1 {
+  text-align: center;
+  font-size: 200%;
+}
+
+h2 {
+  font-size: 150%;
+}
+
+img {
+  max-height: 100%;
+  max-width: 100%;
+}
+
+.clickable {
+  cursor: pointer;
+}
+
+.hidden {
+  display: none;
+}
+
+/* Misc */
 header, .network, #check-for-updates div {
   display: -webkit-box;
   display: -webkit-flex;
@@ -24,60 +98,8 @@ footer {
   text-align:center;
 }
 
-* {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  margin: 0;
-}
-
-a {
-  text-decoration: underline;
-  color: white;
-}
-
-a.iconhref {
-  text-decoration: none;
-}
-
-html, body {
-  position: relative;
-  height: 100%;
-  overflow: auto;
-}
-
-body {
-  font-family: 'anaheim', 'Open Sans', 'Helvetic Neue', Helvetica, Arial, sans-serif;
-  font-size: 16px;
-  color: white;
-  background-image: url("../images/Closeup_aerial_view_of_Downtown_Oakland_and_Lakeside_Park.jpg");
-  background-size:cover;
-}
-
-body p {
-  font-size: 16px;
-}
-
-h1, h2, h3, h4, h5, h6 {
-  font-family: 'dosis';
-  font-weight: bold;
-}
-
-h1 {
-  text-align: center;
-}
-
-h1, h2 {
-  font-size: 18px;
-}
-
-img {
-  max-height: 100%;
-  max-width: 100%;
-}
-
 small {
-  font-size: 0.9em;
+  font-size: 80%;
   letter-spacing: 0.05em;
   color: rgba(255, 255, 255, 0.6);
 }
@@ -96,7 +118,7 @@ small {
 
 .error {
   text-decoration: underline;
-  font-size: .75em;
+  font-size: 100%;
   margin: 0 0 .75em 0;
   color: red;
 }
@@ -119,7 +141,7 @@ small {
   padding-bottom: -2px;
   padding-left: 4px;
   padding-right: 4px;
-  font-size: 14px;
+  font-size: 100%;
   border-radius: 5px;
   line-height: 100%;
 }
@@ -130,7 +152,7 @@ select {
   border: 1px solid rgb(0, 173, 238);
   color: white;
   padding: 0em .3em 0em .3em;
-  font-size: 13px;
+  font-size: 100%;
 }
 
 .inline-style {
@@ -168,7 +190,7 @@ select {
   position: relative;
   margin: 0 auto;
   padding: 0px 17px;
-  max-width: 480px;
+  max-width: 80%;
   min-height: 100%;
   display: -webkit-box;
   display: -webkit-flex;
@@ -195,6 +217,7 @@ select {
   margin-bottom: 32px;
   padding-right: 8px;
 }
+
 .network > * {
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
@@ -257,11 +280,11 @@ select {
 .ping small,
 .bandwidth small,
 .data-use small {
-  font-size: 10px;
+  font-size: 80%;
 }
 
 h2 small {
-  font-size: .7em;
+  font-size: 80%;
 }
 
 .status {
@@ -373,7 +396,7 @@ label {
 
   background-color: rgba(255, 255, 255, 0);
   border-width: 0;
-  font-size: 12px;
+  font-size: 80%;
   text-align: center;
   color: white;
   border-radius: 0;

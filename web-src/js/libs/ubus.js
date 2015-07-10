@@ -78,7 +78,7 @@ module.exports = function(opts) {
   };
 
   this.logout = function(callback) {
-    return this._call('session', 'login', {}, callback);
+    return this._call('session', 'destroy', { session: this.sessionID }, callback);
   };
 
   this.login = function(username, password, callback) {

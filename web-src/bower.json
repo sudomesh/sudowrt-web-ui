@@ -16,6 +16,7 @@
   ],
   "devDependencies": {
     "jquery-jsonrpc": "~0.1.1",
-    "jquery_jeditable": "git@github.com:tuupola/jquery_jeditable.git#~1.7.3"
+    "jquery_jeditable": "git@github.com:tuupola/jquery_jeditable.git#~1.7.3",
+    "bootstrap": "~3.3.5"
   }
 }

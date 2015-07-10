@@ -1,26 +1,18 @@
 <header>
-  <span>
-    <a title="Dashboard" class="iconhref" onclick={ logout }>
-      Dashboard
-      <img src="images/dashboard.png" class="icon" alt="dashboard" />
-    </a>
-  </span>
 
   <h1>sudowrt settings</h1>
 
   <span if={ loggedIn }>
     Logged in as: { username }
-    <a title="Logout" class="iconhref" onclick={ logout }>
-      Logout
-      <img src="images/logout.png" class="icon" alt="Logout" />
-    </a>
+    <div title="Logout" class="clickable" onclick={ logout }>
+      Logout <span class="glyphicon glyphicon-log-out" alt="Logout"></span>
+    </div>
   </span>
 
   <span if={ !loggedIn }>
-    <a title="Login" class="iconhref" onclick={ login }>
-      Login
-      <img src="images/login.png" class="icon" alt="Login" />
-    </a>
+    <div title="Login" class="clickable" onclick={ login }>
+      Login <span class="glyphicon glyphicon-log-in" alt="Login"></span>
+    </div>
   </span>
 
   <script type="es6">

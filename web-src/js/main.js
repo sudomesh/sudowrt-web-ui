@@ -1,6 +1,6 @@
 var $ = require('jquery');
 var _ = require('lodash');
-require('jquery-editable');
+var getSlug = require('speakingurl');
 
 var riot = require('riot');
 var RiotControl = require('riotcontrol');
@@ -9,8 +9,8 @@ var dashboardStore = new DashboardStore();
 RiotControl.addStore(dashboardStore);
 
 var loginModal = require('./tags/login-modal.tag');
-var loginModal = require('./tags/header.tag');
-
+var header = require('./tags/header.tag');
+var inputSettings = require('./tags/input-settings.tag');
 
 riot.route.parser(function(path) {
   var raw = path.split('?'),
@@ -30,18 +30,34 @@ riot.route.parser(function(path) {
 });
 
 riot.route(function(target, action, params) {
-
-  console.log(target);
-
   if (target === 'login') {
     RiotControl.trigger('login_open');
+  }
+
+  if (target === 'settings') {
+    var testSettings = [
+    {
+      name: 'Upload Speed Limit',
+      type: 'number',
+      units: 'Mbps'
+    },
+    {
+      name: 'Download Speed Limit',
+      type: 'number',
+      units: 'kbps'
+    }
+    ];
+    _.each(testSettings, function(setting) {
+      setting.slug = getSlug(setting.name);
+    });
+    RiotControl.trigger('settings_changed', testSettings);
   }
 });
 
 var pageInit = function() {
-
   riot.mount('login-modal');
   riot.mount('header');
+  riot.mount('input-settings');
   riot.route('login');
 
 };

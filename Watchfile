@@ -1,0 +1,3 @@
+exports.watchList = [
+  [/^web-src\/.*less$/,"lessc --include-path=./web-src/less/libs:./web-src/bower_components/bootstrap/less --source-map --source-map-less-inline web-src/less/admin-style.less ./web-build/css/bundle.css"]   
+]

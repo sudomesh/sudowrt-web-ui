@@ -20,8 +20,7 @@
     "url": "http://github.com/sudomesh/sudowrt-luci2-webclient.git"
   },
   "browser": {
-    "jsonrpc": "./web-src/bower_components/jquery-jsonrpc/jquery.jsonrpc.js",
-    "jquery-editable": "./web-src/bower_components/jquery_jeditable/js/jquery.jeditable.js"
+    "jsonrpc": "./web-src/bower_components/jquery-jsonrpc/jquery.jsonrpc.js"
   },
   "dependencies": {
     "async": "^0.9.0",
@@ -40,6 +39,7 @@
     "browserify": "^10.2.4",
     "browserify-shim": "^3.8.9",
     "catw": "^1.0.1",
+    "es6-promise": "^2.3.0",
     "imagemin": "^3.2.0",
     "imagemin-jpeg-recompress": "^4.3.0",
     "jquery": "^2.1.4",
@@ -47,8 +47,10 @@
     "riot": "^2.2.1",
     "riotcontrol": "0.0.1",
     "riotify": "^0.1.2",
+    "speakingurl": "^5.0.1",
     "uglify-js": "^2.4.23",
     "uglifycss": "0.0.15",
+    "watch-compile": "^0.2.3",
     "watchify": "^3.2.3"
   },
   "browserify": {
@@ -61,22 +63,19 @@
       "depends": [
         "jquery:jQuery"
       ]
-    },
-    "jquery-editable": {
-      "depends": [
-        "jquery:jQuery"
-      ]
     }
   },
   "scripts": {
-    "build-dev-css": "lessc --include-path=./web-src/less/libs --source-map --source-map-less-inline web-src/less/admin-style.less ./web-build/css/bundle.css",
-    "build-prod-css": "lessc --include-path=./web-src/less/libs -x web-src/less/admin-style.less ./web-build/css/bundle.min.css",
+    "build-dev-fonts": "cp -v ./web-src/fonts/* ./web-build/fonts/ && cp -v ./web-src/bower_components/bootstrap/fonts/* ./web-build/fonts/",
+    "build-dev-css": "lessc --include-path=./web-src/less/libs:./web-src/bower_components/bootstrap/less --source-map --source-map-less-inline web-src/less/admin-style.less ./web-build/css/bundle.css",
+    "build-prod-css": "lessc --include-path=./web-src/less/libs:./web-src/bower_components/bootstrap/less -x web-src/less/admin-style.less ./web-build/css/bundle.min.css",
+    "build-prod-js": "browserify ./web-src/js/main.js -t [ riotify --type es6 --ext tag ] | uglifyjs -mc > ./web-build/js/bundle.min.js",
+    "build-prod": "npm run build-prod-css && npm run build-prod-js",
     "build-dev-js": "browserify ./web-src/js/main.js -d -t [ riotify --type es6 --ext tag ] -o web-build/js/bundle.js",
-    "build-prod-js": "browserify ./web-src/js/main.js | uglifyjs -mc > ./web-build/js/bundle.min.js",
     "build-dev-html": "cp ./web-src/index.html web-build/index.html",
     "build-dev": "npm run build-dev-css && npm run build-dev-js && npm run build-dev-html",
     "compress-images": "node build-scripts/compress-images.js",
-    "watch-dev": "npm run watch-dev-js & catw ./web-src/*.html -o ./web-build/index.html -v",
+    "watch-dev": "npm run watch-dev-js & watchcompile -f Watchfile -s & catw ./web-src/*.html -o ./web-build/index.html -v",
     "watch-dev-js": "watchify ./web-src/js/main.js -d -t [ riotify --type es6 ] -o web-build/js/bundle.js",
     "postinstall": "cd ./web-src bower install",
     "bowerinstall": "cd ./web-src bower install"
