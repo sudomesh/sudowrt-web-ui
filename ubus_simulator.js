@@ -1,5 +1,6 @@
 
 var uci = require('./uci.js');
+var _ = require('lodash');
 
 module.exports = {
 
@@ -102,6 +103,27 @@ module.exports = {
             // TODO implement
             callback("Not implemented", [1, {}]);
         }
+    },
+
+    password: {
+      'set': function(opts, callback) {
+        if (typeof opts.username === 'string' &&
+            opts.username.trim() !== '' &&
+            typeof opts.password === 'string' &&
+            opts.password.trim() !== '') {
+
+          var account = _.find(this._accounts, function(account) {
+            return account.username === opts.username;
+          });
+
+          if (typeof account === 'undefined') {
+            callback('Account ' + opts.username + ' not found');
+          } else {
+            account.password = opts.password;
+            callback(null, [5, {}]);
+          }
+        }
+      }
     },
 
     uci: {

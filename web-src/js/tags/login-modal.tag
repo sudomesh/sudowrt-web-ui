@@ -48,6 +48,8 @@
 
     this.close = (e) => {
       self.dialogShowing = false;
+      self.username.value = '';
+      self.password.value = '';
       self.update();
     }
     

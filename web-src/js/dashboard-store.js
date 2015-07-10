@@ -12,23 +12,44 @@ module.exports = function TodoStore() {
 
   self.username = '';
   self.loggedIn = false;
-  self.uciPackages = {};
+  self.uciConfigs = {};
 
   // Our store's event handlers / API.
   // This is where we would use AJAX calls to interface with the server.
   // Any number of views can emit actions/events without knowing the specifics of the back-end.
   // This store can easily be swapped for another, while the view components remain untouched.
 
-  self.on('login', function(credentials) {
+  this.login = function(credentials, callback) {
     ubus.login(credentials.username, credentials.password, function(err, resp) {
       console.log(err);
       console.log(resp);
       if(err) {
         console.error(err);
-        self.trigger('login_error')        
+        callback(err);
+      } else {
+        callback(null, resp.data.username);
+      }
+    });
+  };
+
+  this.changePassword = function(credentials, callback) {
+    ubus.call('password.set', {username: self.username, password: credentials.new_password}, function(err, result) {
+      if (err) {
+        console.log(err);
+        self.trigger('password_error', err);
+      } else {
+        self.trigger('password_success', result);
+      }
+    });
+  };
+
+  self.on('login', function(credentials) {
+    this.login(credentials, function(err, result) {
+      if (err) {
+        self.trigger('login_error');
       } else {
         self.loggedIn = true;
-        self.username = resp.data.username;
+        self.username = result;
         self.trigger('login_changed', self.username)        
       }
     });
@@ -44,36 +65,52 @@ module.exports = function TodoStore() {
     self.trigger('login_changed', null);
   });
 
-  this.fetchSettings = function() {
+  self.on('password_change', function(credentials) {
+    self.login({username: self.username, password: credentials.old_password}, function(err, result) {
+      if (err) {
+        self.trigger('password_error', 'Your password was incorrect');
+      } else {
+        self.changePassword(credentials, function(err, result) {
+          console.log(err);
+          console.log(result);
+          if (err) {
+            self.trigger('password_error', 'There was an error changing your password');
+          } else {
+            self.trigger('password_success', result);
+          }
+        });
+      }
+    });
+  });
+
+  this.fetchUciSettings = function() {
     if (self.loggedIn) {
-      ubus.call('uci.get', {}, function(err, result) {
+      ubus.call('uci.configs', {}, function(err, result) {
         if (typeof result === 'object' &&
-            typeof result.data === 'object' &&
-            typeof result.data.packages === 'object') {
+            typeof result.configs === 'object') {
 
-          self.packageNames = result.data.packages;
-          var packagePromises = [];
-          _.each(self.packageNames, function(package) {
-            packagePromises.push(new Promise(function(resolve, reject) {
-              ubus.call('uci.get', {package: package}, function(err, result) {
+          console.log('configs result: ');
+          console.log(result);
+          self.configNames = result.configs;
+          var configPromises = [];
+          _.each(self.configNames, function(configName) {
+            configPromises.push(new Promise(function(resolve, reject) {
+              ubus.call('uci.get', {config: configName}, function(err, result) {
                 if (typeof result === 'object' &&
-                    typeof result.data === 'object') {
+                    typeof result.values === 'object') {
 
-                  resolve(result.data);
+                  self.uciConfigs[configName] = result.values;
+                  resolve(null, result.values);
                 } else {
-                  reject();
+                  resolve(err, null);
                 }
               });
             }));
           });
 
-          Promise.all(packagePromises).then(function(resultsArray) {
-            _.each(resultsArray, function(package) {
-              _.each(package, function(uciPackage, packageName) {
-                self.uciPackages[packageName] = uciPackage;
-              });
-            });
-            self.trigger('settings_changed', self.uciPackages);
+          Promise.all(configPromises).then(function(resultsArray) {
+            console.log(self.uciConfigs);
+            self.trigger('uci_configs_changed', self.uciConfigs);
           }).catch(function(error) {
             console.error(error);
           });
@@ -84,7 +121,7 @@ module.exports = function TodoStore() {
 
   self.on('login_changed', function(user) {
     if (user) {
-      self.fetchSettings();
+      self.fetchUciSettings();
     }
   });
 

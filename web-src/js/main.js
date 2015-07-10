@@ -1,6 +1,7 @@
 var $ = require('jquery');
 var _ = require('lodash');
 var getSlug = require('speakingurl');
+var sectionConfigs = require('./section-configs.js');
 
 var riot = require('riot');
 var RiotControl = require('riotcontrol');
@@ -11,6 +12,7 @@ RiotControl.addStore(dashboardStore);
 var loginModal = require('./tags/login-modal.tag');
 var header = require('./tags/header.tag');
 var inputSettings = require('./tags/input-settings.tag');
+var passwordChange = require('./tags/password-change.tag');
 
 riot.route.parser(function(path) {
   var raw = path.split('?'),
@@ -57,7 +59,8 @@ riot.route(function(target, action, params) {
 var pageInit = function() {
   riot.mount('login-modal');
   riot.mount('header');
-  riot.mount('input-settings');
+  riot.mount('password-change');
+  riot.mount('div#uci-settings', 'input-settings', { sectionName: 'uci' });
   riot.route('login');
 
 };

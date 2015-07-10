@@ -1,5 +1,5 @@
 var Imagemin = require('imagemin');
-var buildConfig = require('../config.js').build;
+var buildConfig = require('./config.js').build;
 var imageminJpegRecompress = require('imagemin-jpeg-recompress');
 
 // jpegs get special treatment

@@ -72,6 +72,7 @@
     "build-prod-js": "browserify ./web-src/js/main.js -t [ riotify --type es6 --ext tag ] | uglifyjs -mc > ./web-build/js/bundle.min.js",
     "build-prod": "npm run build-prod-css && npm run build-prod-js",
     "build-dev-js": "browserify ./web-src/js/main.js -d -t [ riotify --type es6 --ext tag ] -o web-build/js/bundle.js",
+    "build-med-js": "browserify ./web-src/js/main.js -t [ riotify --type es6 --ext tag ] -o web-build/js/bundle.med.js",
     "build-dev-html": "cp ./web-src/index.html web-build/index.html",
     "build-dev": "npm run build-dev-css && npm run build-dev-js && npm run build-dev-html",
     "compress-images": "node build-scripts/compress-images.js",

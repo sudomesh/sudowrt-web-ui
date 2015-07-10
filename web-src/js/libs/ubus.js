@@ -48,6 +48,8 @@ module.exports = function(opts) {
                   // 6 is ubus' way of saying access denied
                 } else if(result[0] === 6) {
                   callback("ubus: permission denied");
+                } else if(result[0] === 5) {
+                  callback(null, "no output");
                 } else {
                   callback("ubus: unknown error code: " + result[0], result[1]);
                 }
