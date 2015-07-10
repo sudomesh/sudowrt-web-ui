@@ -1,90 +1,49 @@
-var UBus = require('./libs/ubus.js');
 var $ = require('jquery');
 var _ = require('lodash');
 require('jquery-editable');
 
-var ubus;
+var riot = require('riot');
+var RiotControl = require('riotcontrol');
+var DashboardStore = require('./dashboard-store');
+var dashboardStore = new DashboardStore();
+RiotControl.addStore(dashboardStore);
 
-var populateTemplate = function() {
+var loginModal = require('./tags/login-modal.tag');
+var loginModal = require('./tags/header.tag');
 
-  ubus.call('uci.get', {}, function(err, resp) {
-    console.log(err);
-    console.log(resp);
-    _.each(resp.data.packages, function(packageName) {
-      ubus.call('uci.get', {
-        package: packageName,
-        section: 'main'
-      }, function(err, resp) {
-        console.log(err);
-        console.log(resp);
-      });
-    });
-  });
 
-  ubus.call('uci.get', {
-    package: 'tunneldigger', 
-    section: 'main'
-  }, function(err, resp) {
-    if(err) {
-      return console.error(err);
-    }
-    var conf = resp.data['main'];
+riot.route.parser(function(path) {
+  var raw = path.split('?'),
+      uri = raw[0].split('/'),
+      qs = raw[1],
+      params = {}
 
-    ubus.call('uci.set', {
-      package: 'tunneldigger', 
-      section: 'main',
-      option: 'limit_bw_down',
-      value: '4096kbit'
-    }, function(err, resp) {
-      if(err) {
-        return console.error(err);
-      }
+  if (qs) {
+    qs.split('&').forEach(function(v) {
+      var c = v.split('=')
+      params[c[0]] = c[1]
+    })
+  }
 
-      $('#downloadSpeedLimit').html(parseInt(conf.limit_bw_down));
-      $('#uploadSpeedLimit').html(parseInt(conf.limit_bw_up));
+  uri.push(params)
+  return uri
+});
 
-      console.log("Success setting tunneldigger: " + resp);
-    });
-  });
-};
+riot.route(function(target, action, params) {
 
-var validateInput = function(value, settings) {
-  console.log(value);
-  console.log(settings);
-  return value;
-}
+  console.log(target);
+
+  if (target === 'login') {
+    RiotControl.trigger('login_open');
+  }
+});
 
 var pageInit = function() {
 
-  // init editable functions
-  $('.editable').editable(validateInput, {
-    type: 'text',
-    width: '30',
-    height: '14',
-    tooltip: "Click to edit",
-    select: true,
-  });
+  riot.mount('login-modal');
+  riot.mount('header');
+  riot.route('login');
 
-
-  ubus = new UBus();
-  ubus.login('root', 'foobar', function(err, res) {
-    if(err) {
-      return console.error(err);
-    }
-    console.log("Logged in!");
-    console.log(res);
-
-    populateTemplate();
-
-  });
-
-  /*
-     luci2 = new LuCI2('js/luci2');
-     luci2.network.load().then(function() {
-     var interfaces = luci2.network.getInterfaces();
-     console.log(interfaces);
-     });
-     */
-}
+};
 
 $(document).ready(pageInit);
