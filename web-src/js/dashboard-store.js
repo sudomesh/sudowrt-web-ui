@@ -3,7 +3,7 @@ var UBus = require('./libs/ubus.js');
 var _ = require('lodash');
 var promise = require('es6-promise');
 
-module.exports = function TodoStore() {
+module.exports = function dashboardStore() {
   var ubus = new UBus();
 
   riot.observable(this) // Riot provides our event emitter.
@@ -33,14 +33,19 @@ module.exports = function TodoStore() {
   };
 
   this.changePassword = function(credentials, callback) {
-    ubus.call('password.set', {username: self.username, password: credentials.new_password}, function(err, result) {
-      if (err) {
-        console.log(err);
-        self.trigger('password_error', err);
-      } else {
-        self.trigger('password_success', result);
-      }
-    });
+    if (self.loggedIn) {
+      ubus.call('password.set', {username: self.username, password: credentials.new_password}, function(err, result) {
+        if (err) {
+          console.log(err);
+          self.trigger('password_error', err);
+        } else {
+          self.trigger('password_success', result);
+        }
+      });
+    } else {
+      self.trigger('password_error', 'You must be logged in');
+      self.trigger('login_changed', null);
+    }
   };
 
   self.on('login', function(credentials) {
@@ -68,13 +73,13 @@ module.exports = function TodoStore() {
   self.on('password_change', function(credentials) {
     self.login({username: self.username, password: credentials.old_password}, function(err, result) {
       if (err) {
-        self.trigger('password_error', 'Your password was incorrect');
+        self.trigger('password_error', 'There was an error changing your password.');
       } else {
         self.changePassword(credentials, function(err, result) {
           console.log(err);
           console.log(result);
           if (err) {
-            self.trigger('password_error', 'There was an error changing your password');
+            self.trigger('password_error', 'There was an error changing your password.');
           } else {
             self.trigger('password_success', result);
           }
@@ -122,10 +127,41 @@ module.exports = function TodoStore() {
   self.on('login_changed', function(user) {
     if (user) {
       self.fetchUciSettings();
+    } else {
+      ubus.sessionID = null;
     }
   });
 
   self.on('setting_changed', function(setting) {
-    console.log(setting);
+
+    if (self.loggedIn) {
+      var uciSet = {
+        config: setting.section,
+        section: setting.key,
+        values: {}
+      };
+
+      uciSet.values[setting.toChange] = setting.newVal;
+
+      ubus.call('uci.set', uciSet, function(err, result) {
+        if (!err) {
+
+          // Right now we're just going to "commit"
+          // but ideally, we'd keep track of changes and have a "save and apply" button
+          ubus.call('uci.commit', { config: setting.section }, function(err, result) {
+            if (!err) {
+              self.trigger('uncommitted_changes', result);
+            }
+          });
+        } else {
+          console.log(err);
+          self.trigger('setting_changed_error', err);
+        }
+      });
+     
+    } else {
+      self.trigger('password_error', 'You must be logged in');
+      self.trigger('login_changed', null);
+    }
   });
 }

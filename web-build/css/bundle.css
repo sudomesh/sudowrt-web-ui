@@ -1182,6 +1182,9 @@ label {
   color: black;
   height: 20px;
 }
+#uci-settings .inputs-container {
+  float: right;
+}
 /* Modal Styles */
 .md-modal {
   position: fixed;

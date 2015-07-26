@@ -35,24 +35,46 @@ riot.route(function(target, action, params) {
   if (target === 'login') {
     RiotControl.trigger('login_open');
   }
+});
 
-  if (target === 'settings') {
-    var testSettings = [
-    {
-      name: 'Upload Speed Limit',
-      type: 'number',
-      units: 'Mbps'
-    },
-    {
-      name: 'Download Speed Limit',
-      type: 'number',
-      units: 'kbps'
+dashboardStore.on('uci_configs_changed', function(configs) {
+  sections = [];
+  console.log(configs);
+  _.each(sectionConfigs, function(sectionConfig, sectionKey) {
+    var section = {
+      title: sectionConfig.title,
+      uciInputs: []
     }
-    ];
-    _.each(testSettings, function(setting) {
-      setting.slug = getSlug(setting.name);
+    _.each(configs, function(uciSetting, uciSettingKey) {
+      _.each(sectionConfig.uciConfigs, function(uciConfig) {
+
+        if (uciConfig.section === uciSettingKey) {
+
+          // This is pretty inelegant - could be refactored:
+          // need a findWithKey function
+          _.each(uciSetting, function(setting, key) {
+            if (setting[uciConfig.matchType] === uciConfig.match) {
+              configEntry = setting;
+              configEntryKey = key;
+            }
+          });
+
+          if (typeof configEntry === 'object') {
+            var uciSettingInput = uciConfig;
+            uciSettingInput.value = configEntry[uciConfig.toChange];
+            uciSettingInput.type = configEntry['.type'];
+            uciSettingInput.key = configEntryKey;
+            section.uciInputs.push(uciSettingInput);
+          }
+        }
+      });
     });
-    RiotControl.trigger('settings_changed', testSettings);
+
+    sections.push(section);
+  });
+
+  if (sections.length > 0) {
+    RiotControl.trigger('sections_changed', sections);
   }
 });
 

@@ -338,34 +338,31 @@ module.exports = {
         }.bind(this));
     },
 
+    // Set *shouldn't* add new sections
     set: function(opts, callback) {
         opts = opts || {};
 
-        if(!opts.config || !opts.section || !opts.value) {
-            return callback("Missing config, section or value");
+        if(!opts.config || !opts.section || !opts.values) {
+            return callback("Missing config, section or values");
         }
 
-        if(opts.option) { // this means we're changing an existing option
-            this.parseConfig(opts.config, function(err, conf) {
-                if(err) {
-                    return callback(err);
-                }
+        this.parseConfig(opts.config, function(err, conf) {
+            if(err) {
+                return callback(err);
+            }
 
-                if(!conf[opts.config] || !conf[opts.config][opts.section]) {
-                    return callback("Config or section does not exist");
-                }
+            if(!conf[opts.config] || !conf[opts.config][opts.section]) {
+                return callback("Config or section does not exist");
+            }
 
-                conf[opts.config][opts.section][opts.option] = opts.value;
+            _.each(opts.values, function(value, key) {
+              conf[opts.config][opts.section][key] = value;
+            });
 
-                this.writeConfig(conf, function(err) {
-                    callback(err);
-                });
-            }.bind(this));
-
-        } else { // this means we're adding a new section
-            // TODO implement
-            return callback("Not implemented");
-        }
+            this.writeConfig(conf, function(err) {
+                callback(err);
+            });
+        }.bind(this));
     }
 
 };
