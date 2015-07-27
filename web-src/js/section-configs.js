@@ -10,6 +10,15 @@ module.exports = {
         toChange: 'ssid',
         format: 'string',
         slug: 'private-ssid'
+      },
+      {
+        section: 'wireless',
+        labelTitle: 'Private Wifi Password',
+        matchType: 'ifname',
+        match: 'priv0',
+        toChange: 'key',
+        format: 'string',
+        slug: 'private-password'
       }
     ]
   },
