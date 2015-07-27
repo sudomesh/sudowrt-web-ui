@@ -2,6 +2,7 @@ var riot = require('riot');
 var UBus = require('./libs/ubus.js');
 var _ = require('lodash');
 var promise = require('es6-promise');
+var moment = require('moment');
 
 module.exports = function dashboardStore() {
   var ubus = new UBus();
@@ -27,6 +28,10 @@ module.exports = function dashboardStore() {
         console.error(err);
         callback(err);
       } else {
+        // TODO - check that these are all set/valid first?
+        localStorage.setItem('sessionUsername', resp.data.username);
+        localStorage.setItem('sessionID', resp.ubus_rpc_session);
+        localStorage.setItem('sessionExpiration', moment().add(resp.expires, 'seconds').toISOString());
         callback(null, resp.data.username);
       }
     });
@@ -123,6 +128,21 @@ module.exports = function dashboardStore() {
       });
     }
   };
+
+  self.on('saved_session', function(session) {
+    if (moment().isBefore(moment(session.expiration))) {
+      ubus.sessionID = session.id;
+      // TODO: We should just have a dumb "check if I'm authenticated" ubus call here
+      self.loggedIn = true;
+      self.fetchUciSettings();
+      self.trigger('login_changed', session.username);
+
+    } else {
+      localStorage.setItem('sessionUsername', null);
+      localStorage.setItem('sessionID', null);
+      localStorage.setItem('sessionExpiration', null);
+    }
+  });
 
   self.on('login_changed', function(user) {
     if (user) {

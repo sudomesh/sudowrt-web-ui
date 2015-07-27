@@ -1,5 +1,6 @@
 var $ = require('jquery');
 var _ = require('lodash');
+
 var getSlug = require('speakingurl');
 var sectionConfigs = require('./section-configs.js');
 
@@ -79,12 +80,24 @@ dashboardStore.on('uci_configs_changed', function(configs) {
 });
 
 var pageInit = function() {
+  
   riot.mount('login-modal');
   riot.mount('header');
   riot.mount('password-change');
   riot.mount('div#uci-settings', 'input-settings', { sectionName: 'uci' });
   riot.route('login');
 
+  var sessionUsername = localStorage.getItem('sessionUsername');
+  var sessionId = localStorage.getItem('sessionID');
+  var sessionExpiration = localStorage.getItem('sessionExpiration');
+
+  if (typeof sessionId === 'string' && typeof sessionExpiration === 'string') {
+    RiotControl.trigger('saved_session', {
+      id: sessionId, 
+      expiration: sessionExpiration,
+      username: sessionUsername
+    });
+  }
 };
 
 $(document).ready(pageInit);

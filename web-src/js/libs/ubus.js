@@ -1,5 +1,6 @@
 $ = require('jquery');
 require('jsonrpc');
+moment = require('moment');
 
 module.exports = function(opts) {
   opts = opts || {};
@@ -102,6 +103,7 @@ module.exports = function(opts) {
         return callback("login failed: ubus server did not return session id", res);
       }
       this.sessionID = res.ubus_rpc_session;
+      this.sessionExpiration = moment().add(res.expires, 'seconds').toISOString();
 
       callback(null, res);
     }.bind(this));
