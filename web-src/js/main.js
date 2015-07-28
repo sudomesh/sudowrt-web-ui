@@ -79,6 +79,14 @@ dashboardStore.on('uci_configs_changed', function(configs) {
   }
 });
 
+dashboardStore.on('login_changed', function(user) {
+  if (user) {
+    riot.route('home');
+  } else {
+    riot.route('login');
+  }
+});
+
 var pageInit = function() {
   
   riot.mount('login-modal');

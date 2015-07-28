@@ -93,6 +93,13 @@ module.exports = function dashboardStore() {
     });
   });
 
+  this.clearSession = function() {
+    ubus.sessionID = null;
+    localStorage.setItem('sessionUsername', null);
+    localStorage.setItem('sessionID', null);
+    localStorage.setItem('sessionExpiration', null);
+  };
+
   this.fetchUciSettings = function() {
     if (self.loggedIn) {
       ubus.call('uci.configs', {}, function(err, result) {
@@ -138,9 +145,7 @@ module.exports = function dashboardStore() {
       self.trigger('login_changed', session.username);
 
     } else {
-      localStorage.setItem('sessionUsername', null);
-      localStorage.setItem('sessionID', null);
-      localStorage.setItem('sessionExpiration', null);
+      self.clearSession();
     }
   });
 
@@ -148,7 +153,7 @@ module.exports = function dashboardStore() {
     if (user) {
       self.fetchUciSettings();
     } else {
-      ubus.sessionID = null;
+      self.clearSession();
     }
   });
 

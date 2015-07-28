@@ -3,9 +3,9 @@
   <div each={ sections }>
     <h2>{ title }</h2>
     <div each={ uciInputs }>
-      <label for="{ slug }">{ labelTitle }</label>
-      <form onsubmit={ parent.save } class="inputs-container">
-        <input type="{ format }" id="{ slug }" value={ value }><span if={ units }>({ units })</span>
+      <label for="{ slug }-input">{ labelTitle }</label>
+      <form onsubmit={ parent.parent.save } class="inputs-container">
+        <input id="{ slug }-input" type="{ format }" value={ this.value } onchange={ parent.parent.inputChanged }><span if={ units }>({ units })</span>
         <button type="submit">save</button>
       </form>
     </div>
@@ -13,7 +13,7 @@
 
   <script type="es6">
     let RiotControl = require('riotcontrol');
-    let $ = require('jquery');
+    let _ = require('lodash');
     let self = this;
     
 
@@ -22,18 +22,24 @@
 
     this.save = (e) => {
       var item = e.item;
-      // Better way for getting val of non-'input' 
-      var newVal = $(e.currentTarget).parent().find('#' + item.slug).val();
-      if (typeof newVal !== 'undefined') {
-        item.newVal = newVal;
-      }
+      console.log(item.value);
       RiotControl.trigger('setting_changed', item);
     }
 
+    this.inputChanged = (e) => {
+      var item = e.item;
+      item.value = e.target.value;
+    }
+
     RiotControl.on('sections_changed', function(sections) {
-      self.sections = sections;
-      self.update();
+      self.update({sections: sections});
     })
    
+    RiotControl.on('login_changed', function(user) {
+      if (!user) {
+        self.update({sections: []});
+      }
+    })
+
   </script>
 </input-settings>
