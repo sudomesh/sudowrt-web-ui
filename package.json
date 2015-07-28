@@ -8,6 +8,7 @@
     "name": "Marc Juul, Maxb",
     "email": "npm@juul.io, maxb@sudomesh.org"
   },
+  "license": "AGPL-3.0",
   "keywords": [
     "sudowrt",
     "openwrt",
