@@ -166,7 +166,7 @@ module.exports = function dashboardStore() {
         values: {}
       };
 
-      uciSet.values[setting.toChange] = setting.newVal;
+      uciSet.values[setting.toChange] = setting.value;
 
       ubus.call('uci.set', uciSet, function(err, result) {
         if (!err) {
