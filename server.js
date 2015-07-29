@@ -7,7 +7,7 @@ var path = require('path');
 var bodyParser = require('body-parser');
 var jsonrpc = require('node-express-json-rpc2-async');
 
-var ubusSim = require('./ubus_simulator.js');
+var ubusSim = require('./ubus-simulator/simulator.js');
 
 var settings = {
     port: 3000
@@ -15,10 +15,14 @@ var settings = {
 
 var app = express();
 
-// If we want to try to serve the old luci2_app
-// app.use(express.static(path.join(path.join(__dirname, 'static'), 'luci2_app')));
-// If we want to serve static content from our (old) static path
-// app.use(express.static(path.join(__dirname, 'static')));
+// If we want to try to serve the luci2_app 
+// app.use(express.static(path.join(path.join(__dirname, 'reference-apps'), 'luci2_app')));
+
+// If we want to try to serve the eff app 
+// app.use(express.static(path.join(path.join(__dirname, 'reference-apps'), 'eff_app')));
+
+// If we want to try to serve our first draft
+// app.use(express.static(path.join(__dirname, 'reference-apps')));
 
 // If we want to serve static content from our build path
 app.use(express.static(path.join(__dirname, 'web-build')));

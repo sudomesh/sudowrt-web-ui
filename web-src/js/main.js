@@ -1,7 +1,6 @@
 var $ = require('jquery');
 var _ = require('lodash');
 
-var getSlug = require('speakingurl');
 var sectionConfigs = require('./section-configs.js');
 
 var riot = require('riot');

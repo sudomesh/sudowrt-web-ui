@@ -1,6 +1,12 @@
-var path = require('path');
-
 module.exports = {
-	port: '3000',
-	root: path.resolve('./')
+  image: {
+    jpegopts: {
+      loops: 10,
+      method: "ssim",
+      accuracy: true,
+      quality: "low"
+    },
+    pngopts: [],
+    gifopts: []
+  }
 };

@@ -7,7 +7,7 @@ var imageminJpegtran = require('imagemin-jpegtran');
 var imageminOptipng = require('imagemin-optipng');
 var imageminJpegRecompress = require('imagemin-jpeg-recompress');
 
-var buildConfig = require('./config.js');
+var buildConfig = require('../config.js');
 var dest = './web-build/images/';
 
 gulp.task('build-gif', function() {
