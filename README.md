@@ -13,7 +13,7 @@ node server.js
 
 # Structure
 
-This repository holds the source and build tools for the front end of the sudomesh web admin app. It also holds some of the back end source code. In order to a "proper" openwrt build of this app, the /luci/sudowrt-web-ui/Makefile feed will pull in files from this repo and package them such that on install, they will be copied to the appropriate locations on the router.
+This repository holds the source and build tools for the front end of the sudomesh web admin app. It also holds some of the back end source code. In order to a "proper" openwrt build of this app, the [/luci/sudowrt-web-ui/Makefile](https://github.com/sudomesh/sudowrt-packages/blob/master/luci/sudowrt-web-ui/Makefile) feed will pull in files from this repo and package them such that on install, they will be copied to the appropriate locations on the router.
 
 
 ## Real Back-End 
