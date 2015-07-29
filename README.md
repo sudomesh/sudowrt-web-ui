@@ -72,7 +72,7 @@ web-src/
 
 [Riotjs](https://muut.com/riotjs/) is a "react-like user interface micro-library". It uses "tag" files which a browserify transform compiles to something that a web client can understand. It follows in the reactjs/web-components model of mixing html templating with the applicable logic. The tag files are all under the directory `tags/` and end with the extension `.tag`. It's an arbitrary extension which is set up in browserify gulp task and could be changed if anyone felt opinionated about it ;)  Also, the tag files are in ES6 (another fancy browserify transform). I'm not 100% sure whether we should go back to just using ES5 for the riot tags or if we should consider migrating the rest of the javascript to ES6. We'll see how things progress.
 
-In the steps of micro-react, we're using a flux-like store to handle application state. Riotjs provides event emitter and `observable` functionality, which we leverage for it.
+In the steps of micro-react, we're using a "Event Controller / Dispatcher For RiotJS, Inspired By Flux": [RiotControl](https://github.com/jimsparkman/RiotControl). It's a tiny extension to riotjs - just 17 loc. It *should* allow us to keep application state separate from the view and the rest of the logic.
 
 Riotjs is also handling routing, though we could very easily swap in another front-end routing library. If we end up needing more complicated routing, I think [Page.js](https://visionmedia.github.io/page.js/) is a pretty cool option. 
 

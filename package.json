@@ -44,7 +44,7 @@
     "es6-promise": "^2.3.0",
     "gulp": "^3.9.0",
     "gulp-changed": "^1.2.1",
-    "gulp-clean": "^0.3.1",
+    "gulp-uglify": "^0.3.1",
     "gulp-if": "^1.2.5",
     "gulp-imagemin": "^2.3.0",
     "gulp-less": "^3.0.3",
