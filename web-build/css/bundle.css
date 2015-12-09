@@ -897,7 +897,7 @@ img {
 .hidden {
   display: none;
 }
-form {
+form input {
   color: #222;
 }
 /* Misc */
@@ -1196,7 +1196,14 @@ label {
   color: black;
   height: 20px;
 }
-#uci-settings .inputs-container {
+.settings-container .input-section {
+  padding: 3px 0;
+}
+.settings-container .input-section label {
+  margin: 10px 0;
+  display: inline-block;
+}
+.settings-container .inputs-container {
   float: right;
 }
 /* Modal Styles */

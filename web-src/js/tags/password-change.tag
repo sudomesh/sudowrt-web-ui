@@ -1,13 +1,24 @@
 <password-change>
-  <div if={ loggedIn }>
+  <div class="settings-container "if={ loggedIn }>
     <div class="subheading">
-      <span class="clickable" onclick={ toggle }>Change admin password</span>
+      <span class="clickable" onclick={ toggle }><span class="glyphicon glyphicon-edit"></span>  Change admin password</span>
     </div>
-    <form if={ showForm } onsubmit={ save }>
-      <label for="old_password">old password:</label><input type="password" id="old_password" name="old_password">
-      <label for="new_password">new password:</label><input type="password" id="new_password" name="new_password">
-      <label for="new_password2">new password (again):</label><input type="password" id="new_password2" name="new_password2">
-      <button onclick={ parent.save }>save</button>
+    <form class="pure-form" if={ showForm } onsubmit={ save }>
+      <div class="input-section">
+        <label for="old_password">old password:</label>
+        <span class="inputs-container"><input type="password" id="old_password" name="old_password"></span>
+      </div>
+      <div class="input-section">
+        <label for="new_password">new password:</label>
+        <span class="inputs-container"><input type="password" id="new_password" name="new_password"></span>
+      </div>
+      <div class="input-section">
+        <label for="new_password2">new password (again):</label>
+        <span class="inputs-container">
+          <input type="password" id="new_password2" name="new_password2">
+          <button class="pure-button" onclick={ parent.save }>save</button>
+        </span>
+      </div>
       <div if={ showErrorMsg } class="error-msg">{ errorMessage }</div>
     </form>
   </div>

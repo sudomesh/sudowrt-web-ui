@@ -1,12 +1,12 @@
 <input-settings>
 
-  <div each={ sections }>
+  <div class="settings-container" each={ sections }>
     <h2>{ title }</h2>
-    <div each={ uciInputs }>
+    <div class="input-section" each={ uciInputs }>
       <label for="{ slug }-input">{ labelTitle }</label>
-      <form onsubmit={ parent.parent.save } class="inputs-container">
+      <form onsubmit={ parent.parent.save } class="pure-form inputs-container">
         <input id="{ slug }-input" type="{ format }" value={ this.value } onchange={ parent.parent.inputChanged }><span if={ units }>({ units })</span>
-        <button type="submit">save</button>
+        <button type="submit" class="pure-button">save</button>
       </form>
     </div>
   </div>

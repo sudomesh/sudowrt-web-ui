@@ -8,7 +8,7 @@ module.exports = {
         matchType: 'ifname',
         match: 'priv0',
         toChange: 'ssid',
-        format: 'string',
+        format: 'text',
         slug: 'private-ssid'
       },
       {
@@ -17,7 +17,7 @@ module.exports = {
         matchType: 'ifname',
         match: 'priv0',
         toChange: 'key',
-        format: 'string',
+        format: 'text',
         slug: 'private-password'
       }
     ]
@@ -31,7 +31,7 @@ module.exports = {
         matchType: 'interface',
         match: 'l2tp0',
         toChange: 'limit_bw_down',
-        format: 'string',
+        format: 'text',
         slug: 'shared-bw-down',
       },
       {
@@ -40,7 +40,7 @@ module.exports = {
         matchType: 'interface',
         match: 'l2tp0',
         toChange: 'limit_bw_up',
-        format: 'string',
+        format: 'text',
         slug: 'shared-bw-up',
       }
     ]

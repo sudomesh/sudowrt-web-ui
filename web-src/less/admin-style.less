@@ -78,7 +78,10 @@ img {
 }
 
 form {
-  color: @dark-text;
+
+  input {
+    color: @dark-text;
+  }
 }
 
 /* Misc */
@@ -418,7 +421,16 @@ label {
   height: 20px;
 }
 
-#uci-settings {
+.settings-container {
+
+  .input-section {
+    padding: 3px 0;
+
+    label {
+      margin: 10px 0;
+      display: inline-block;
+    }
+  }
 
   .inputs-container {
     float: right;
