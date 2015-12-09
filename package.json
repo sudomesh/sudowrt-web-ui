@@ -23,6 +23,7 @@
   "dependencies": {
     "async": "^0.9.0",
     "body-parser": "^1.11.0",
+    "bootstrap": "^3.3.6",
     "express": "^4.11.2",
     "extend": "^2.0.0",
     "findit": "^2.0.0",
@@ -32,11 +33,11 @@
     "node-express-json-rpc2": "git://github.com/sudomesh/node-express-json-rpc2",
     "node-express-json-rpc2-async": "git://github.com/sudomesh/node-express-json-rpc2.git",
     "node-json-rpc": "0.0.1",
-    "nodemon": "^1.4.0"
+    "nodemon": "^1.4.0",
+    "purecss": "^0.6.0"
   },
   "devDependencies": {
     "babel": "^5.6.14",
-    "bower": "^1.4.1",
     "browserify": "^10.2.4",
     "browserify-shim": "^3.8.9",
     "del": "^1.2.0",
@@ -66,10 +67,6 @@
     "watchify": "^3.2.3",
     "yargs": "^3.15.0"
   },
-  "browserify": {
-  },
-  "scripts": {
-    "postinstall": "cd ./web-src bower install",
-    "bowerinstall": "cd ./web-src bower install"
-  }
+  "browserify": {},
+  "scripts": {}
 }

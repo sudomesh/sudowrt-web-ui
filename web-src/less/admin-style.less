@@ -1,6 +1,5 @@
 @import "peoplesopen-fonts";
 
-@bootstrap_path: "../bower_components/bootstrap/";
 //** Load fonts from this directory.
 @icon-font-path:          '/css/fonts/';
 @our-font-path:          '/css/fonts/';
@@ -9,7 +8,11 @@
 //** Element ID within SVG icon file.
 @icon-font-svg-id:        "glyphicons_halflingsregular";
 
-@import '@{bootstrap_path}less/glyphicons.less';
+@import "glyphicons";
+@import (inline) "pure-min.css";
+
+@dark-text: #222;
+
 
 /* Reset stuff */
 * {
@@ -72,6 +75,10 @@ img {
 
 .hidden {
   display: none;
+}
+
+form {
+  color: @dark-text;
 }
 
 /* Misc */

@@ -10,8 +10,12 @@ var cleancss = new LessPluginCleanCSS({ advanced: true });
 var rename = require('gulp-rename');
 
 var lessOpts = {
-  paths: [ path.join('web-src', 'less', 'libs'), path.join('web-src', 'bower_components', 'bootstrap', 'less') ],
-}
+  paths: [ 
+    path.join('web-src', 'less', 'libs'), 
+    path.join('node_modules', 'bootstrap', 'less'),
+    path.join('node_modules', 'purecss', 'build') 
+  ],
+};
 
 var fileName = 'bundle.css';
 
