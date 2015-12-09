@@ -1,5 +1,4 @@
-$ = require('jquery');
-require('jsonrpc');
+var rpc = require('node-json-rpc');
 moment = require('moment');
 
 module.exports = function(opts) {
@@ -11,10 +10,15 @@ module.exports = function(opts) {
 
   this.sessionID = null;
 
-  $.jsonRPC.setup({
-    endPoint: this.ubusProtocol + this.ubusHost + ':' + this.ubusPort + this.ubusPath
-  });
-  
+  var rpcOptions = {
+    port: this.ubusPort,
+    host: this.ubusHost,
+    path: this.ubusPath,
+    strict: false
+  };
+
+  var rpcClient = new rpc.Client(rpcOptions);
+
   this._call = function(obj, method, args, callback) {
 
     var sessionID;
@@ -35,39 +39,35 @@ module.exports = function(opts) {
 
     console.log([sessionID, obj, method, args]);
 
-    $.jsonRPC.request(
-        'call', { 
-          params: [sessionID, obj, method, args],
-          success: 
-            function(resp) {
-              console.log(resp);
-
-              if(callback) {
-                var result = resp.result;
-                if(result[0] === 0) {
-                  callback(null, result[1]);
-                  // 6 is ubus' way of saying access denied
-                } else if(result[0] === 6) {
-                  callback("ubus: permission denied");
-                } else if(result[0] === 5) {
-                  callback(null, "no output");
-                } else {
-                  callback("ubus: unknown error code: " + result[0], result[1]);
-                }
-              }
-            },
-            
-
-          error: function(err) {
-            console.log(err);
-            if(callback) {
-              callback(err);
-            }
-            
+    rpcClient.call({
+      method: 'call', 
+      jsonrpc: '2.0',
+      id: 1,
+      params: [sessionID, obj, method, args]
+    }, function (err, res) {
+      if (err || 
+          (typeof res === 'object' && res.error)) { 
+        console.log(err); 
+        if(callback) {
+          callback(err);
+        }
+      } else { 
+        console.log(res);
+        if(callback) {
+          var result = res.result;
+          if(result[0] === 0) {
+            callback(null, result[1]);
+            // 6 is ubus' way of saying access denied
+          } else if(result[0] === 6) {
+            callback("ubus: permission denied");
+          } else if(result[0] === 5) {
+            callback(null, "no output");
+          } else {
+            callback("ubus: unknown error code: " + result[0], result[1]);
           }
         }
-    );
-
+      }
+    });
   };
 
   // ubus.call('myobject.mymethod', [args], [callback])

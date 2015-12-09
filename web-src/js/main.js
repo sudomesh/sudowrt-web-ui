@@ -1,4 +1,3 @@
-var $ = require('jquery');
 var _ = require('lodash');
 
 var sectionConfigs = require('./section-configs.js');
@@ -107,4 +106,4 @@ var pageInit = function() {
   }
 };
 
-$(document).ready(pageInit);
+document.addEventListener("DOMContentLoaded", pageInit);
