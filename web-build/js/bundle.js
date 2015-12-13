@@ -26970,21 +26970,39 @@ module.exports = {
     uciConfigs: [
       {
         section: 'wireless',
-        labelTitle: 'Private SSID',
+        labelTitle: 'Private SSID 2.4ghz',
         matchType: 'ifname',
-        match: 'priv0',
+        match: 'priv2',
         toChange: 'ssid',
         format: 'text',
-        slug: 'private-ssid'
+        slug: 'private-ssid-2'
       },
       {
         section: 'wireless',
-        labelTitle: 'Private Wifi Password',
+        labelTitle: 'Private Wifi Password 2.4ghz',
         matchType: 'ifname',
-        match: 'priv0',
+        match: 'priv2',
         toChange: 'key',
         format: 'text',
-        slug: 'private-password'
+        slug: 'private-password-2'
+      },
+      {
+        section: 'wireless',
+        labelTitle: 'Private SSID 5ghz',
+        matchType: 'ifname',
+        match: 'priv5',
+        toChange: 'ssid',
+        format: 'text',
+        slug: 'private-ssid-5'
+      },
+      {
+        section: 'wireless',
+        labelTitle: 'Private Wifi Password 5ghz',
+        matchType: 'ifname',
+        match: 'priv5',
+        toChange: 'key',
+        format: 'text',
+        slug: 'private-password-5'
       }
     ]
   },
