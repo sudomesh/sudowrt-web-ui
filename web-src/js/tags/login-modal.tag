@@ -1,15 +1,15 @@
 <login-modal>
   <!-- http://tympanus.net/codrops/2013/06/25/nifty-modal-window-effects/ -->
   <div class="md-modal md-effect-1 {md-show: dialogShowing}">
-    <div class="md-content">
+    <div class="md-content login-modal">
       <h3>Login</h3>
       <div>
-        <form onsubmit={ login }>
-          <input name="username" type="text">
-          <input name="password" type="password">
-          <button>Submit</button>
+        <form class="pure-form" onsubmit={ login }>
+          <input name="username" placeholder="username" type="text">
+          <input name="password" placeholder="password" type="password">
+          <button type="submit" class="pure-button pure-button-primary">Submit</button>
+          <button class="pure-button pure-button-secondary" onclick={ close }>Close</button>
         </form>
-        <button onclick={ close }>close</button>
       </div>
     </div>
   </div>

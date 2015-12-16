@@ -1549,7 +1549,7 @@ function blitBuffer (src, dst, offset, length) {
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"base64-js":3,"ieee754":4,"isarray":5}],3:[function(require,module,exports){
+},{"base64-js":3,"ieee754":4,"isarray":13}],3:[function(require,module,exports){
 var lookup = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/';
 
 ;(function (exports) {
@@ -1762,13 +1762,6 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
 }
 
 },{}],5:[function(require,module,exports){
-var toString = {}.toString;
-
-module.exports = Array.isArray || function (arr) {
-  return toString.call(arr) == '[object Array]';
-};
-
-},{}],6:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -2071,7 +2064,7 @@ function isUndefined(arg) {
   return arg === void 0;
 }
 
-},{}],7:[function(require,module,exports){
+},{}],6:[function(require,module,exports){
 var http = module.exports;
 var EventEmitter = require('events').EventEmitter;
 var Request = require('./lib/request');
@@ -2217,7 +2210,7 @@ http.STATUS_CODES = {
     510 : 'Not Extended',               // RFC 2774
     511 : 'Network Authentication Required' // RFC 6585
 };
-},{"./lib/request":8,"events":6,"url":33}],8:[function(require,module,exports){
+},{"./lib/request":7,"events":5,"url":32}],7:[function(require,module,exports){
 var Stream = require('stream');
 var Response = require('./response');
 var Base64 = require('Base64');
@@ -2428,7 +2421,7 @@ var isXHR2Compatible = function (obj) {
     if (typeof FormData !== 'undefined' && obj instanceof FormData) return true;
 };
 
-},{"./response":9,"Base64":10,"inherits":12,"stream":31}],9:[function(require,module,exports){
+},{"./response":8,"Base64":9,"inherits":11,"stream":30}],8:[function(require,module,exports){
 var Stream = require('stream');
 var util = require('util');
 
@@ -2550,7 +2543,7 @@ var isArray = Array.isArray || function (xs) {
     return Object.prototype.toString.call(xs) === '[object Array]';
 };
 
-},{"stream":31,"util":35}],10:[function(require,module,exports){
+},{"stream":30,"util":34}],9:[function(require,module,exports){
 ;(function () {
 
   var object = typeof exports != 'undefined' ? exports : this; // #8: web workers
@@ -2612,7 +2605,7 @@ var isArray = Array.isArray || function (xs) {
 
 }());
 
-},{}],11:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 var http = require('http');
 
 var https = module.exports;
@@ -2628,7 +2621,7 @@ https.request = function (params, cb) {
     return http.request.call(this, params, cb);
 }
 
-},{"http":7}],12:[function(require,module,exports){
+},{"http":6}],11:[function(require,module,exports){
 if (typeof Object.create === 'function') {
   // implementation from standard node.js 'util' module
   module.exports = function inherits(ctor, superCtor) {
@@ -2653,7 +2646,7 @@ if (typeof Object.create === 'function') {
   }
 }
 
-},{}],13:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 /**
  * Determine if an object is Buffer
  *
@@ -2672,12 +2665,12 @@ module.exports = function (obj) {
     ))
 }
 
-},{}],14:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 module.exports = Array.isArray || function (arr) {
   return Object.prototype.toString.call(arr) == '[object Array]';
 };
 
-},{}],15:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 // shim for using process in browser
 
 var process = module.exports = {};
@@ -2770,9 +2763,9 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],16:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 (function (global){
-/*! https://mths.be/punycode v1.4.0 by @mathias */
+/*! https://mths.be/punycode v1.3.2 by @mathias */
 ;(function(root) {
 
 	/** Detect free variables */
@@ -2838,7 +2831,7 @@ process.umask = function() { return 0; };
 	 * @returns {Error} Throws a `RangeError` with the applicable error message.
 	 */
 	function error(type) {
-		throw new RangeError(errors[type]);
+		throw RangeError(errors[type]);
 	}
 
 	/**
@@ -2985,7 +2978,7 @@ process.umask = function() { return 0; };
 
 	/**
 	 * Bias adaptation function as per section 3.4 of RFC 3492.
-	 * https://tools.ietf.org/html/rfc3492#section-3.4
+	 * http://tools.ietf.org/html/rfc3492#section-3.4
 	 * @private
 	 */
 	function adapt(delta, numPoints, firstTime) {
@@ -3290,17 +3283,14 @@ process.umask = function() { return 0; };
 			return punycode;
 		});
 	} else if (freeExports && freeModule) {
-		if (module.exports == freeExports) {
-			// in Node.js, io.js, or RingoJS v0.8.0+
+		if (module.exports == freeExports) { // in Node.js or RingoJS v0.8.0+
 			freeModule.exports = punycode;
-		} else {
-			// in Narwhal or RingoJS v0.7.0-
+		} else { // in Narwhal or RingoJS v0.7.0-
 			for (key in punycode) {
 				punycode.hasOwnProperty(key) && (freeExports[key] = punycode[key]);
 			}
 		}
-	} else {
-		// in Rhino or a web browser
+	} else { // in Rhino or a web browser
 		root.punycode = punycode;
 	}
 
@@ -3308,7 +3298,7 @@ process.umask = function() { return 0; };
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{}],17:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -3394,7 +3384,7 @@ var isArray = Array.isArray || function (xs) {
   return Object.prototype.toString.call(xs) === '[object Array]';
 };
 
-},{}],18:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -3481,16 +3471,16 @@ var objectKeys = Object.keys || function (obj) {
   return res;
 };
 
-},{}],19:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 'use strict';
 
 exports.decode = exports.parse = require('./decode');
 exports.encode = exports.stringify = require('./encode');
 
-},{"./decode":17,"./encode":18}],20:[function(require,module,exports){
+},{"./decode":16,"./encode":17}],19:[function(require,module,exports){
 module.exports = require("./lib/_stream_duplex.js")
 
-},{"./lib/_stream_duplex.js":21}],21:[function(require,module,exports){
+},{"./lib/_stream_duplex.js":20}],20:[function(require,module,exports){
 (function (process){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -3584,7 +3574,7 @@ function forEach (xs, f) {
 
 }).call(this,require('_process'))
 
-},{"./_stream_readable":23,"./_stream_writable":25,"_process":15,"core-util-is":26,"inherits":12}],22:[function(require,module,exports){
+},{"./_stream_readable":22,"./_stream_writable":24,"_process":14,"core-util-is":25,"inherits":11}],21:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -3632,7 +3622,7 @@ PassThrough.prototype._transform = function(chunk, encoding, cb) {
   cb(null, chunk);
 };
 
-},{"./_stream_transform":24,"core-util-is":26,"inherits":12}],23:[function(require,module,exports){
+},{"./_stream_transform":23,"core-util-is":25,"inherits":11}],22:[function(require,module,exports){
 (function (process){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -4588,7 +4578,7 @@ function indexOf (xs, x) {
 
 }).call(this,require('_process'))
 
-},{"./_stream_duplex":21,"_process":15,"buffer":2,"core-util-is":26,"events":6,"inherits":12,"isarray":14,"stream":31,"string_decoder/":32,"util":1}],24:[function(require,module,exports){
+},{"./_stream_duplex":20,"_process":14,"buffer":2,"core-util-is":25,"events":5,"inherits":11,"isarray":13,"stream":30,"string_decoder/":31,"util":1}],23:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -4799,7 +4789,7 @@ function done(stream, er) {
   return stream.push(null);
 }
 
-},{"./_stream_duplex":21,"core-util-is":26,"inherits":12}],25:[function(require,module,exports){
+},{"./_stream_duplex":20,"core-util-is":25,"inherits":11}],24:[function(require,module,exports){
 (function (process){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -5281,7 +5271,7 @@ function endWritable(stream, state, cb) {
 
 }).call(this,require('_process'))
 
-},{"./_stream_duplex":21,"_process":15,"buffer":2,"core-util-is":26,"inherits":12,"stream":31}],26:[function(require,module,exports){
+},{"./_stream_duplex":20,"_process":14,"buffer":2,"core-util-is":25,"inherits":11,"stream":30}],25:[function(require,module,exports){
 (function (Buffer){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -5393,10 +5383,10 @@ function objectToString(o) {
 
 }).call(this,{"isBuffer":require("../../../../insert-module-globals/node_modules/is-buffer/index.js")})
 
-},{"../../../../insert-module-globals/node_modules/is-buffer/index.js":13}],27:[function(require,module,exports){
+},{"../../../../insert-module-globals/node_modules/is-buffer/index.js":12}],26:[function(require,module,exports){
 module.exports = require("./lib/_stream_passthrough.js")
 
-},{"./lib/_stream_passthrough.js":22}],28:[function(require,module,exports){
+},{"./lib/_stream_passthrough.js":21}],27:[function(require,module,exports){
 exports = module.exports = require('./lib/_stream_readable.js');
 exports.Stream = require('stream');
 exports.Readable = exports;
@@ -5405,13 +5395,13 @@ exports.Duplex = require('./lib/_stream_duplex.js');
 exports.Transform = require('./lib/_stream_transform.js');
 exports.PassThrough = require('./lib/_stream_passthrough.js');
 
-},{"./lib/_stream_duplex.js":21,"./lib/_stream_passthrough.js":22,"./lib/_stream_readable.js":23,"./lib/_stream_transform.js":24,"./lib/_stream_writable.js":25,"stream":31}],29:[function(require,module,exports){
+},{"./lib/_stream_duplex.js":20,"./lib/_stream_passthrough.js":21,"./lib/_stream_readable.js":22,"./lib/_stream_transform.js":23,"./lib/_stream_writable.js":24,"stream":30}],28:[function(require,module,exports){
 module.exports = require("./lib/_stream_transform.js")
 
-},{"./lib/_stream_transform.js":24}],30:[function(require,module,exports){
+},{"./lib/_stream_transform.js":23}],29:[function(require,module,exports){
 module.exports = require("./lib/_stream_writable.js")
 
-},{"./lib/_stream_writable.js":25}],31:[function(require,module,exports){
+},{"./lib/_stream_writable.js":24}],30:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -5540,7 +5530,7 @@ Stream.prototype.pipe = function(dest, options) {
   return dest;
 };
 
-},{"events":6,"inherits":12,"readable-stream/duplex.js":20,"readable-stream/passthrough.js":27,"readable-stream/readable.js":28,"readable-stream/transform.js":29,"readable-stream/writable.js":30}],32:[function(require,module,exports){
+},{"events":5,"inherits":11,"readable-stream/duplex.js":19,"readable-stream/passthrough.js":26,"readable-stream/readable.js":27,"readable-stream/transform.js":28,"readable-stream/writable.js":29}],31:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -5763,7 +5753,7 @@ function base64DetectIncompleteChar(buffer) {
   this.charLength = this.charReceived ? 3 : 0;
 }
 
-},{"buffer":2}],33:[function(require,module,exports){
+},{"buffer":2}],32:[function(require,module,exports){
 // Copyright Joyent, Inc. and other Node contributors.
 //
 // Permission is hereby granted, free of charge, to any person obtaining a
@@ -6472,14 +6462,14 @@ function isNullOrUndefined(arg) {
   return  arg == null;
 }
 
-},{"punycode":16,"querystring":19}],34:[function(require,module,exports){
+},{"punycode":15,"querystring":18}],33:[function(require,module,exports){
 module.exports = function isBuffer(arg) {
   return arg && typeof arg === 'object'
     && typeof arg.copy === 'function'
     && typeof arg.fill === 'function'
     && typeof arg.readUInt8 === 'function';
 }
-},{}],35:[function(require,module,exports){
+},{}],34:[function(require,module,exports){
 (function (process,global){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -7070,7 +7060,7 @@ function hasOwnProperty(obj, prop) {
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"./support/isBuffer":34,"_process":15,"inherits":12}],36:[function(require,module,exports){
+},{"./support/isBuffer":33,"_process":14,"inherits":11}],35:[function(require,module,exports){
 (function (process,global){
 /*!
  * @overview es6-promise - a tiny implementation of Promises/A+.
@@ -8047,7 +8037,7 @@ function hasOwnProperty(obj, prop) {
 
 }).call(this,require('_process'),typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"_process":15}],37:[function(require,module,exports){
+},{"_process":14}],36:[function(require,module,exports){
 (function (global){
 /**
  * @license
@@ -20403,7 +20393,7 @@ function hasOwnProperty(obj, prop) {
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{}],38:[function(require,module,exports){
+},{}],37:[function(require,module,exports){
 //! moment.js
 //! version : 2.10.6
 //! authors : Tim Wood, Iskren Chernev, Moment.js contributors
@@ -23599,12 +23589,12 @@ function hasOwnProperty(obj, prop) {
     return _moment;
 
 }));
-},{}],39:[function(require,module,exports){
+},{}],38:[function(require,module,exports){
 /* Export Client Class */
 module.exports.Client = require('./rpcclient.js');
 /* Export Server Class */
 module.exports.Server = require('./rpcserver.js');
-},{"./rpcclient.js":41,"./rpcserver.js":42}],40:[function(require,module,exports){
+},{"./rpcclient.js":40,"./rpcserver.js":41}],39:[function(require,module,exports){
 (function (Buffer){
 /* Basic extendable http authentication
  *
@@ -23730,7 +23720,7 @@ var Auth = function (options) {
 module.exports = Auth;
 }).call(this,require("buffer").Buffer)
 
-},{"buffer":2}],41:[function(require,module,exports){
+},{"buffer":2}],40:[function(require,module,exports){
 var http = require('http');
 var https = require('https');
 
@@ -23923,7 +23913,7 @@ var Client = function (options) {
 };
 
 module.exports = Client;
-},{"http":7,"https":11}],42:[function(require,module,exports){
+},{"http":6,"https":10}],41:[function(require,module,exports){
 var http = require('http');
 var https = require('https');
 
@@ -24273,7 +24263,7 @@ var Server = function (options) {
 };
 
 module.exports = Server;
-},{"./rpcauth":40,"http":7,"https":11}],43:[function(require,module,exports){
+},{"./rpcauth":39,"http":6,"https":10}],42:[function(require,module,exports){
 /* Riot v2.3.11, @license MIT, (c) 2015 Muut Inc. + contributors */
 
 ;(function(window, undefined) {
@@ -26522,7 +26512,7 @@ riot.Tag = Tag
 
 })(typeof window != 'undefined' ? window : void 0);
 
-},{}],44:[function(require,module,exports){
+},{}],43:[function(require,module,exports){
 var RiotControl = {
   _stores: [],
   addStore: function(store) {
@@ -26541,7 +26531,7 @@ var RiotControl = {
 
 if (typeof(module) !== 'undefined') module.exports = RiotControl;
 
-},{}],45:[function(require,module,exports){
+},{}],44:[function(require,module,exports){
 var riot = require('riot');
 var UBus = require('./libs/ubus.js');
 var _ = require('lodash');
@@ -26735,7 +26725,7 @@ module.exports = function dashboardStore() {
   });
 }
 
-},{"./libs/ubus.js":46,"es6-promise":36,"lodash":37,"moment":38,"riot":43}],46:[function(require,module,exports){
+},{"./libs/ubus.js":45,"es6-promise":35,"lodash":36,"moment":37,"riot":42}],45:[function(require,module,exports){
 (function (global){
 var rpc = require('node-json-rpc');
 moment = require('moment');
@@ -26852,7 +26842,7 @@ module.exports = function(opts) {
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
 
-},{"moment":38,"node-json-rpc":39}],47:[function(require,module,exports){
+},{"moment":37,"node-json-rpc":38}],46:[function(require,module,exports){
 var _ = require('lodash');
 
 var sectionConfigs = require('./section-configs.js');
@@ -26963,7 +26953,7 @@ var pageInit = function() {
 
 document.addEventListener("DOMContentLoaded", pageInit);
 
-},{"./dashboard-store":45,"./section-configs.js":48,"./tags/header.tag":49,"./tags/input-settings.tag":50,"./tags/login-modal.tag":51,"./tags/password-change.tag":52,"lodash":37,"riot":43,"riotcontrol":44}],48:[function(require,module,exports){
+},{"./dashboard-store":44,"./section-configs.js":47,"./tags/header.tag":48,"./tags/input-settings.tag":49,"./tags/login-modal.tag":50,"./tags/password-change.tag":51,"lodash":36,"riot":42,"riotcontrol":43}],47:[function(require,module,exports){
 module.exports = {
   wireless: {
     title: 'Wireless',
@@ -27031,7 +27021,7 @@ module.exports = {
   }
 }
 
-},{}],49:[function(require,module,exports){
+},{}],48:[function(require,module,exports){
 var riot = require('riot');
 module.exports = riot.tag2('header', '<h1>sudowrt settings</h1> <span if="{loggedIn}"> Logged in as: {username} <div title="Logout" class="clickable" onclick="{logout}"> Logout <span class="glyphicon glyphicon-log-out" alt="Logout"></span> </div> </span> <span if="{!loggedIn}"> <div title="Login" class="clickable" onclick="{login}"> Login <span class="glyphicon glyphicon-log-in" alt="Login"></span> </div> </span>', '', '', function(opts) {
 
@@ -27057,7 +27047,7 @@ this.logout = function (e) {
 };
 }, '{ }');
 
-},{"riot":43,"riotcontrol":44}],50:[function(require,module,exports){
+},{"riot":42,"riotcontrol":43}],49:[function(require,module,exports){
 var riot = require('riot');
 module.exports = riot.tag2('input-settings', '<div class="settings-container" each="{sections}"> <h2>{title}</h2> <div class="input-section" each="{uciInputs}"> <label for="{slug}-input">{labelTitle}</label> <form onsubmit="{parent.parent.save}" class="pure-form inputs-container"> <input id="{slug}-input" type="{format}" value="{this.value}" onchange="{parent.parent.inputChanged}"><span if="{units}">({units})</span> <button type="submit" class="pure-button">save</button> </form> </div> </div>', '', '', function(opts) {
 var RiotControl = require('riotcontrol');
@@ -27089,9 +27079,9 @@ RiotControl.on('login_changed', function (user) {
 });
 }, '{ }');
 
-},{"lodash":37,"riot":43,"riotcontrol":44}],51:[function(require,module,exports){
+},{"lodash":36,"riot":42,"riotcontrol":43}],50:[function(require,module,exports){
 var riot = require('riot');
-module.exports = riot.tag2('login-modal', '<div class="md-modal md-effect-1 {md-show: dialogShowing}"> <div class="md-content"> <h3>Login</h3> <div> <form onsubmit="{login}"> <input name="username" type="text"> <input name="password" type="password"> <button>Submit</button> </form> <button onclick="{close}">close</button> </div> </div> </div> <div class="md-overlay" onclick="{close}"></div>', '', '', function(opts) {
+module.exports = riot.tag2('login-modal', '<div class="md-modal md-effect-1 {md-show: dialogShowing}"> <div class="md-content login-modal"> <h3>Login</h3> <div> <form class="pure-form" onsubmit="{login}"> <input name="username" placeholder="username" type="text"> <input name="password" placeholder="password" type="password"> <button type="submit" class="pure-button pure-button-primary">Submit</button> <button class="pure-button pure-button-secondary" onclick="{close}">Close</button> </form> </div> </div> </div> <div class="md-overlay" onclick="{close}"></div>', '', '', function(opts) {
 
 var RiotControl = require('riotcontrol');
 var self = this;
@@ -27130,9 +27120,9 @@ this.close = function (e) {
 };
 }, '{ }');
 
-},{"riot":43,"riotcontrol":44}],52:[function(require,module,exports){
+},{"riot":42,"riotcontrol":43}],51:[function(require,module,exports){
 var riot = require('riot');
-module.exports = riot.tag2('password-change', '<div class="settings-container " if="{loggedIn}"> <div class="subheading"> <span class="clickable" onclick="{toggle}"><span class="glyphicon glyphicon-edit"></span> Change admin password</span> </div> <form class="pure-form" if="{showForm}" onsubmit="{save}"> <div class="input-section"> <label for="old_password">old password:</label> <span class="inputs-container"><input type="password" id="old_password" name="old_password"></span> </div> <div class="input-section"> <label for="new_password">new password:</label> <span class="inputs-container"><input type="password" id="new_password" name="new_password"></span> </div> <div class="input-section"> <label for="new_password2">new password (again):</label> <span class="inputs-container"> <input type="password" id="new_password2" name="new_password2"> <button class="pure-button" onclick="{parent.save}">save</button> </span> </div> <div if="{showErrorMsg}" class="error-msg">{errorMessage}</div> </form> </div>', '', '', function(opts) {
+module.exports = riot.tag2('password-change', '<div class="settings-container " if="{loggedIn}"> <div class="subheading"> <span class="clickable" onclick="{toggle}"><span class="glyphicon glyphicon-edit clickable-icon"></span> Change admin password</span> </div> <form class="pure-form" if="{showForm}" onsubmit="{save}"> <div class="input-section"> <label for="old_password">old password:</label> <span class="inputs-container"><input type="password" id="old_password" name="old_password"></span> </div> <div class="input-section"> <label for="new_password">new password:</label> <span class="inputs-container"><input type="password" id="new_password" name="new_password"></span> </div> <div class="input-section"> <label for="new_password2">new password (again):</label> <span class="inputs-container"> <input type="password" id="new_password2" name="new_password2"> <button class="pure-button" onclick="{parent.save}">save</button> </span> </div> <div if="{showErrorMsg}" class="error-msg">{errorMessage}</div> </form> </div>', '', '', function(opts) {
 var RiotControl = require('riotcontrol');
 var self = this;
 
@@ -27202,7 +27192,7 @@ this.save = function (e) {
 };
 }, '{ }');
 
-},{"riot":43,"riotcontrol":44}]},{},[47])
+},{"riot":42,"riotcontrol":43}]},{},[46])
 
 
 //# sourceMappingURL=bundle.js.map

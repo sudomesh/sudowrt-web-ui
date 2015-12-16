@@ -1,5 +1,5 @@
 var browserify   = require('browserify');
-var argv         = require('yargs').argv
+var argv         = require('yargs').argv;
 var gulp         = require('gulp');
 var gulpif       = require('gulp-if');
 var uglify       = require('gulp-uglify');
@@ -32,7 +32,7 @@ gulp.task('browserify', function() {
       .on("error", notify.onError("Error: <%= error.message %>"))
       .pipe(gulp.dest('./web-build/js/'))
       .pipe(notify());
-  }
+  };
 
   if (argv.prod) {
     b = watchify(b);

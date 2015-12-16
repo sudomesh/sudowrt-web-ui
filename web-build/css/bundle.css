@@ -900,26 +900,10 @@ img {
 form input {
   color: #222;
 }
-/* Misc */
-header,
-.network,
-#check-for-updates div {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-flow: row nowrap;
-  -ms-flex-flow: row nowrap;
-  flex-flow: row nowrap;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-  -ms-flex-align: center;
-  align-items: center;
+.pure-button-primary {
+  background-color: #20b24b;
 }
+/* Misc */
 footer {
   margin: 30px 0;
   font-size: smaller;
@@ -929,6 +913,9 @@ small {
   font-size: 80%;
   letter-spacing: 0.05em;
   color: rgba(255, 255, 255, 0.6);
+}
+.login-modal input {
+  margin-bottom: 10px;
 }
 #checkForUpdate:hover,
 .toggle:hover,
@@ -970,15 +957,6 @@ select {
   padding: 0em .3em 0em .3em;
   font-size: 100%;
 }
-.inline-style {
-  display: inline;
-}
-.setting {
-  float: right;
-}
-.editable form {
-  display: inline;
-}
 .links {
   color: #ffcc00;
   font-weight: 400;
@@ -1019,144 +997,8 @@ select {
   -ms-flex-positive: 1;
   flex-grow: 1;
 }
-.network {
-  margin-bottom: 32px;
-  padding-right: 8px;
-}
-.network > * {
-  -webkit-flex-shrink: 0;
-  -ms-flex-negative: 0;
-  flex-shrink: 0;
-}
-.network header {
-  -webkit-flex-basis: 120px;
-  -ms-flex-preferred-size: 120px;
-  flex-basis: 120px;
-  padding-right: 10px;
-}
-.network .title {
-  -webkit-box-flex: 1;
-  -webkit-flex-grow: 1;
-  -ms-flex-positive: 1;
-  flex-grow: 1;
-}
-.speed {
-  white-space: nowrap;
-}
-.speed .upload {
-  color: #00adee;
-}
-.speed .download {
-  color: #f3bf20;
-}
-.off .speed .upload,
-.off .speed .download,
-.off .speed small {
-  color: rgba(255, 255, 255, 0.4);
-}
-.devices {
-  background: url(../images/devices.png) left center no-repeat;
-  -webkit-background-size: 44px;
-  background-size: 44px;
-  padding-left: 44px;
-  color: #ffffff;
-  text-transform: uppercase;
-}
-.ping {
-  color: #ffffff;
-  text-transform: uppercase;
-}
-.bandwidth,
-.data-use {
-  color: #ffffff;
-  text-transform: uppercase;
-  display: inline-block;
-}
-.data-use {
-  padding-left: 10px;
-}
-.devices small,
-.ping small,
-.bandwidth small,
-.data-use small {
-  font-size: 80%;
-}
 h2 small {
   font-size: 80%;
-}
-.status {
-  color: rgba(255, 255, 255, 0.6);
-}
-.status .on.on-button,
-.connected {
-  color: #ffffff;
-}
-.status .off.off-button,
-.disconnected {
-  color: #ffcc00;
-}
-.status .on.off-button,
-.status .off.on-button {
-  color: rgba(255, 255, 255, 0.6);
-}
-/* Hide the toggle for private WiFi because we expect it is not a common use
- * case, and it is easy to lock yourself out of your router with it. */
-#PrivateWiFi.status.toggle {
-  display: none;
-}
-#last-login {
-  margin-bottom: 10px;
-}
-#check-for-updates div,
-#last-login {
-  -ms-flex-preferred-size: 44px;
-  -webkit-flex-basis: 44px;
-  flex-basis: 44px;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  color: #ffcc00;
-}
-footer p {
-  padding-right: 0.5em;
-}
-footer img {
-  height: 30px;
-  width: 30px;
-}
-#last-login span,
-footer span {
-  color: #FFED21;
-}
-.inputError,
-#restartSuccess {
-  display: none;
-}
-#enterSshKey {
-  display: none;
-  padding: 1em;
-  padding-bottom: 0;
-}
-#enterSshKey .controls {
-  margin: 0;
-  padding: 0;
-  text-align: right;
-}
-#input-SSH {
-  width: 100%;
-  height: 11em;
-}
-#cancel-SSH,
-#submit-SSH {
-  outline: medium none;
-  background: none repeat scroll 0% 0% #00ADEE;
-  border: 2px solid #00ADEE;
-  color: #FFF;
-  margin-left: 0.8em;
-}
-label {
-  margin-right: 1em;
 }
 .section {
   padding-left: 1em;
@@ -1174,27 +1016,28 @@ label {
 #check-for-updates.loading .message {
   display: none;
 }
-.section p select {
-  margin-top: 4px;
+.clickable-icon {
+  color: #20b24b;
+  cursor: pointer;
 }
-.editable input {
-  background-color: rgba(255, 255, 255, 0);
-  border-width: 0;
-  font-size: 80%;
-  text-align: center;
-  color: white;
-  border-radius: 0;
+.clickable-icon:hover {
+  color: #2cd95f;
 }
-.editable button {
-  background-color: #20B24B;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  border-radius: 5px;
-  border: 1px solid white;
-  margin-right: -5px;
-  padding: 0;
-  color: black;
-  height: 20px;
+.highlighted {
+  color: #20b24b;
+}
+.header-top-container .title {
+  display: inline-block;
+  width: 60%;
+}
+.header-top-container .subheader-container {
+  top: 15px;
+  display: inline-block;
+  position: relative;
+  width: 15%;
+}
+header .pure-menu .pure-menu-link {
+  color: #20b24b;
 }
 .settings-container .input-section {
   padding: 3px 0;

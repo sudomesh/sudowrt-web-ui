@@ -1,7 +1,7 @@
 <password-change>
   <div class="settings-container "if={ loggedIn }>
     <div class="subheading">
-      <span class="clickable" onclick={ toggle }><span class="glyphicon glyphicon-edit"></span>  Change admin password</span>
+      <span class="clickable" onclick={ toggle }><span class="glyphicon glyphicon-edit clickable-icon"></span>  Change admin password</span>
     </div>
     <form class="pure-form" if={ showForm } onsubmit={ save }>
       <div class="input-section">

@@ -1,40 +1,73 @@
 config wifi-device 'radio0'
-	option type     mac80211
-	option channel  3
-	option macaddr	74:a5:3b:c3:71:14
-	option hwmode	11ng
-	option htmode	HT20
-	list ht_capab	SHORT-GI-20
-	list ht_capab	SHORT-GI-40
-	list ht_capab	TX-STBC
-	list ht_capab	RX-STBC1
-	list ht_capab	DSSS_CCK-40
+  option type 'mac80211'
+  option channel '6'
+  option txpower '20'
+  option path 'platform/ar934x_wmac'
+  option hwmode '11g'
+  option htmode 'HT20'
+  list ht_capab 'TX-STBC'
+  list ht_capab 'TX-STBC-2BY1'
+  list ht_capab 'RX-STBC2'
 
-# the open wifi ap 
 config wifi-iface
-	option device 'radio0'
-	option ifname 'open0'
-	option encryption 'none'
-	option network 'open'
-	option mode 'ap'
-	option ssid 'peoplesopen.net'
+  option device 'radio0'
+  option ifname 'open2'
+  option encryption 'none'
+  option network 'open'
+  option mode 'ap'
+  option ssid 'peoplesopen.net'
 
-# the adhoc interface for the mesh
 config wifi-iface
-	option device 'radio0'
-	option ifname 'adhoc0'
-	option network 'adhoc'
- 	option encryption 'none'
-	option mode 'adhoc'
-	option bssid 'CA:FE:C0:DE:F0:0D'
-	option ssid 'pplsopen.net-node2node'
+  option device 'radio0'
+  option ifname 'priv2'
+  option network 'priv'
+  option encryption 'psk2'
+  option key 'secretwpapassword'
+  option mode 'ap'
+  option ssid 'private-ssid'
 
-# the private wpa2 interface
 config wifi-iface
-	option device 'radio0'
-	option ifname 'priv0'
-	option network 'priv'
-	option encryption 'psk2'
-	option key 'secretpassword'
-	option mode 'ap'
-	option ssid 'myprivatessid'
+  option device 'radio0'
+  option ifname 'mesh2'
+  option network 'mesh2'
+  option encryption 'none'
+  option mode 'adhoc'
+  option bssid 'CA:FE:C0:DE:F0:0D'
+  option ssid 'pplsopen.net-node2node'
+
+config wifi-device 'radio1'
+  option type 'mac80211'
+  option channel '157'
+  option txpower '20'
+  option path 'pci0000:00/0000:00:00.0'
+  option hwmode '11a'
+  option htmode 'HT40+'
+  list ht_capab 'GF'
+  list ht_capab 'TX-STBC'
+  list ht_capab 'RX-STBC2'
+
+config wifi-iface
+  option device 'radio1'
+  option ifname 'open5'
+  option encryption 'none'
+  option network 'open'
+  option mode 'ap'
+  option ssid 'peoplesopen.net'
+
+config wifi-iface
+  option device 'radio1'
+  option ifname 'priv5'
+  option network 'priv'
+  option encryption 'psk2'
+  option mode 'ap'
+  option ssid 'private-ssid'
+  option key 'secretwpapassword'
+
+config wifi-iface
+  option device 'radio1'
+  option ifname 'mesh5'
+  option network 'mesh5'
+  option encryption 'none'
+  option mode 'adhoc'
+  option bssid 'CA:FE:C0:DE:F0:0D'
+  option ssid 'pplsopen.net-node2node'
