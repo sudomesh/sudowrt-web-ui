@@ -26732,9 +26732,19 @@ moment = require('moment');
 
 module.exports = function(opts) {
   opts = opts || {};
-  this.ubusProtocol = opts.ubusProtocol || 'http://';
+  this.ubusProtocol = opts.ubusProtocol || global.location.protocol + '//';
   this.ubusPath = opts.ubusPath || '/ubus';
-  this.ubusPort = opts.ubusPort || global.location.port;
+  var port;
+  if (global.location.port.trim() === '') {
+    if (this.ubusProtocol === 'https://') {
+      port = '443';
+    } else {
+      port = '80';
+    }
+  } else {
+    port = global.location.port;
+  }
+  this.ubusPort = opts.ubusPort || port;
   this.ubusHost = opts.ubusHost || global.location.hostname;
 
   this.sessionID = null;
