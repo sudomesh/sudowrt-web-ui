@@ -914,9 +914,6 @@ small {
   letter-spacing: 0.05em;
   color: rgba(255, 255, 255, 0.6);
 }
-.login-modal input {
-  margin-bottom: 10px;
-}
 #checkForUpdate:hover,
 .toggle:hover,
 #SSH:hover {
