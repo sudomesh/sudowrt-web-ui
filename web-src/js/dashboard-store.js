@@ -7,9 +7,9 @@ var moment = require('moment');
 module.exports = function dashboardStore() {
   var ubus = new UBus();
 
-  riot.observable(this) // Riot provides our event emitter.
-  
-  var self = this
+  var self = this;
+
+  riot.observable(self); // Riot provides our event emitter.
 
   self.username = '';
   self.loggedIn = false;
@@ -20,7 +20,7 @@ module.exports = function dashboardStore() {
   // Any number of views can emit actions/events without knowing the specifics of the back-end.
   // This store can easily be swapped for another, while the view components remain untouched.
 
-  this.login = function(credentials, callback) {
+  self.login = function(credentials, callback) {
     ubus.login(credentials.username, credentials.password, function(err, resp) {
       console.log(err);
       console.log(resp);
@@ -37,7 +37,7 @@ module.exports = function dashboardStore() {
     });
   };
 
-  this.changePassword = function(credentials, callback) {
+  self.changePassword = function(credentials, callback) {
     if (self.loggedIn) {
       ubus.call('password.set', {username: self.username, password: credentials.new_password}, function(err, result) {
         if (err) {
@@ -54,7 +54,7 @@ module.exports = function dashboardStore() {
   };
 
   self.on('login', function(credentials) {
-    this.login(credentials, function(err, result) {
+    self.login(credentials, function(err, result) {
       if (err) {
         self.trigger('login_error');
       } else {
@@ -93,14 +93,14 @@ module.exports = function dashboardStore() {
     });
   });
 
-  this.clearSession = function() {
+  self.clearSession = function() {
     ubus.sessionID = null;
     localStorage.setItem('sessionUsername', null);
     localStorage.setItem('sessionID', null);
     localStorage.setItem('sessionExpiration', null);
   };
 
-  this.fetchUciSettings = function() {
+  self.fetchUciSettings = function() {
     if (self.loggedIn) {
       ubus.call('uci.configs', {}, function(err, result) {
         if (typeof result === 'object' &&
